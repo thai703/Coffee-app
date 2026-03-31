@@ -29,6 +29,7 @@ public class AddRatingActivity extends AppCompatActivity {
     private ActivityAddRatingBinding binding;
     private String productId;
     private String orderId;
+    private int currentRating = 0; // Default to 0 (no stars) as per requirement
 
     private DatabaseReference productRef;
     private DatabaseReference ratingRef;
@@ -53,7 +54,33 @@ public class AddRatingActivity extends AppCompatActivity {
 
         setupToolbar();
         loadProductInfo();
+        loadExistingRating();
         setupListeners();
+    }
+
+    private void loadExistingRating() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser == null)
+            return;
+
+        ratingRef.child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Rating rating = snapshot.getValue(Rating.class);
+                if (rating != null) {
+                    currentRating = Math.round(rating.getStars());
+                    updateStarsUI();
+                    binding.etComment.setText(rating.getComment());
+                } else {
+                    currentRating = 0;
+                    updateStarsUI();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
     }
 
     private void setupToolbar() {
@@ -77,11 +104,33 @@ public class AddRatingActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
         });
     }
 
     private void setupListeners() {
+        binding.star1.setOnClickListener(v -> {
+            currentRating = 1;
+            updateStarsUI();
+        });
+        binding.star2.setOnClickListener(v -> {
+            currentRating = 2;
+            updateStarsUI();
+        });
+        binding.star3.setOnClickListener(v -> {
+            currentRating = 3;
+            updateStarsUI();
+        });
+        binding.star4.setOnClickListener(v -> {
+            currentRating = 4;
+            updateStarsUI();
+        });
+        binding.star5.setOnClickListener(v -> {
+            currentRating = 5;
+            updateStarsUI();
+        });
+
         binding.btnSubmitRating.setOnClickListener(v -> submitRating());
 
         // Add listeners for suggestion chips
@@ -99,12 +148,30 @@ public class AddRatingActivity extends AppCompatActivity {
         }
     }
 
+    private void updateStarsUI() {
+        binding.star1.setImageResource(
+                currentRating >= 1 ? R.drawable.ic_star_filled_gold : R.drawable.ic_star_outline_gold);
+        binding.star2.setImageResource(
+                currentRating >= 2 ? R.drawable.ic_star_filled_gold : R.drawable.ic_star_outline_gold);
+        binding.star3.setImageResource(
+                currentRating >= 3 ? R.drawable.ic_star_filled_gold : R.drawable.ic_star_outline_gold);
+        binding.star4.setImageResource(
+                currentRating >= 4 ? R.drawable.ic_star_filled_gold : R.drawable.ic_star_outline_gold);
+        binding.star5.setImageResource(
+                currentRating >= 5 ? R.drawable.ic_star_filled_gold : R.drawable.ic_star_outline_gold);
+    }
+
     private void submitRating() {
-        float ratingValue = binding.ratingBar.getRating();
+        float ratingValue = currentRating;
         String comment = binding.etComment.getText().toString().trim();
 
         if (ratingValue == 0) {
             Toast.makeText(this, "Vui lòng chọn số sao đánh giá", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (comment.isEmpty()) {
+            Toast.makeText(this, "Vui lòng viết bình luận đánh giá", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -116,56 +183,99 @@ public class AddRatingActivity extends AppCompatActivity {
 
         setLoading(true);
 
-        String ratingId = ratingRef.push().getKey();
         String userId = currentUser.getUid();
         String userName = currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "Người dùng ẩn danh";
         long timestamp = System.currentTimeMillis();
 
-        Rating rating = new Rating(ratingId, userId, userName, ratingValue, comment, timestamp);
+        // Use userId as the ratingId to allow only one rating per user per product
+        Rating rating = new Rating(userId, userId, userName, ratingValue, comment, timestamp);
 
-        // Save the new rating
-        ratingRef.child(ratingId).setValue(rating).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                // After saving, update the product's average rating using a transaction
-                updateProductAverageRating(ratingValue);
-            } else {
+        // 1. Load the old rating first to calculate the delta
+        ratingRef.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Rating oldRating = snapshot.getValue(Rating.class);
+                float oldStars = (oldRating != null) ? oldRating.getStars() : 0;
+
+                // 2. Save the new rating
+                ratingRef.child(userId).setValue(rating).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // 3. Update the product's average rating using a transaction on summary node
+                        updateProductSummaryAndAverage(oldStars, ratingValue);
+                    } else {
+                        setLoading(false);
+                        Toast.makeText(AddRatingActivity.this, "Gửi đánh giá thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
                 setLoading(false);
-                Toast.makeText(AddRatingActivity.this, "Gửi đánh giá thất bại", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void updateProductAverageRating(float newRating) {
-        productRef.runTransaction(new Transaction.Handler() {
+    private void updateProductSummaryAndAverage(float oldStars, float newStars) {
+        DatabaseReference summaryRef = productRef.child("ratingSummary");
+        summaryRef.runTransaction(new Transaction.Handler() {
             @NonNull
             @Override
             public Transaction.Result doTransaction(@NonNull MutableData mutableData) {
-                Product product = mutableData.getValue(Product.class);
-                if (product == null) {
-                    return Transaction.success(mutableData);
+                java.util.Map<String, Object> summary = (java.util.Map<String, Object>) mutableData.getValue();
+                if (summary == null) {
+                    summary = new java.util.HashMap<>();
+                    summary.put("totalStars", 0.0);
+                    summary.put("count", 0L);
                 }
 
-                long ratingCount = product.getRatingCount();
-                double averageRating = product.getRating();
+                double totalStars = summary.get("totalStars") instanceof Double ? (Double) summary.get("totalStars")
+                        : ((Long) summary.get("totalStars")).doubleValue();
+                long count = (Long) summary.get("count");
 
-                // Calculate new average
-                double newAverage = ((averageRating * ratingCount) + newRating) / (ratingCount + 1);
+                if (oldStars == 0) {
+                    // New rating
+                    count++;
+                    totalStars += newStars;
+                } else {
+                    // Update rating
+                    totalStars += (newStars - oldStars);
+                }
 
-                product.setRatingCount(ratingCount + 1);
-                product.setRating(newAverage);
+                summary.put("totalStars", totalStars);
+                summary.put("count", count);
 
-                mutableData.setValue(product);
+                mutableData.setValue(summary);
                 return Transaction.success(mutableData);
             }
 
             @Override
-            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-                setLoading(false);
-                if (committed) {
-                    Toast.makeText(AddRatingActivity.this, "Cảm ơn bạn đã đánh giá!", Toast.LENGTH_SHORT).show();
-                    finish();
+            public void onComplete(@Nullable DatabaseError error, boolean committed,
+                    @Nullable DataSnapshot currentData) {
+                if (committed && currentData != null) {
+                    java.util.Map<String, Object> summary = (java.util.Map<String, Object>) currentData.getValue();
+                    double totalStars = summary.get("totalStars") instanceof Double ? (Double) summary.get("totalStars")
+                            : ((Long) summary.get("totalStars")).doubleValue();
+                    long count = (Long) summary.get("count");
+                    double avg = count > 0 ? totalStars / count : 0;
+
+                    // Update main product nodes for easy display in lists
+                    productRef.child("rating").setValue(avg);
+                    productRef.child("ratingCount").setValue(count).addOnCompleteListener(t -> {
+                        setLoading(false);
+                        Toast.makeText(AddRatingActivity.this, "Cảm ơn bạn đã đánh giá!", Toast.LENGTH_SHORT).show();
+
+                        // Navigate to HomeActivity
+                        android.content.Intent intent = new android.content.Intent(AddRatingActivity.this,
+                                com.example.myapplication.UI.Home.HomeActivity.class);
+                        intent.setFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                                android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    });
                 } else {
-                    Toast.makeText(AddRatingActivity.this, "Không thể cập nhật đánh giá trung bình", Toast.LENGTH_SHORT).show();
+                    setLoading(false);
+                    Toast.makeText(AddRatingActivity.this, "Lỗi cập nhật số liệu", Toast.LENGTH_SHORT).show();
                 }
             }
         });

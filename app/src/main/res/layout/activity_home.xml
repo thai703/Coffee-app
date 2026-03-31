@@ -18,6 +18,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="@color/coffee_brown"
+            app:titleCentered="true"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <RelativeLayout
@@ -26,38 +28,44 @@
                 android:layout_marginEnd="16dp">
 
                 <TextView
+                    android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="@string/app_name"
+                    android:text="Aura Cafe"
                     android:textColor="@color/coffee_brown"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <!-- More Menu (3 dots) -->
-                <ImageView
-                    android:id="@+id/iv_menu_more"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                <FrameLayout
+                    android:id="@+id/frame_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_more_vert" 
-                    android:contentDescription="@string/action_more"/>
+                    android:layout_marginEnd="16dp">
 
-                <ImageView
-                    android:id="@+id/iv_notification"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_toStartOf="@id/iv_menu_more"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_notifications"
-                    android:contentDescription="@string/action_notification" />
+                    <ImageView
+                        android:id="@+id/iv_notification"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_notifications"
+                        android:contentDescription="@string/action_notification" />
+                    
+                    <View
+                        android:id="@+id/view_notification_badge"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:background="@drawable/bg_circle_red"
+                        android:layout_gravity="top|end"
+                        android:visibility="gone"/>
+                </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/iv_notification"
+                    android:layout_toStartOf="@id/frame_notification"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="16dp">
 
@@ -112,9 +120,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="2dp">
+                    android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/white">
                     
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/search_view"
@@ -122,7 +131,9 @@
                         android:layout_height="wrap_content"
                         app:queryHint="@string/search_hint"
                         app:iconifiedByDefault="false"
-                        android:background="@android:color/white" />
+                        app:searchIcon="@drawable/ic_search"
+                        app:queryBackground="@android:color/transparent"
+                        android:background="@android:color/transparent" />
                         
                 </androidx.cardview.widget.CardView>
 
@@ -179,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
                     android:paddingTop="8dp"
-                    android:text="Xin chào!"
+                    android:text="@string/welcome_greeting"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:textColor="@color/coffee_brown"/>
@@ -235,7 +246,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:nestedScrollingEnabled="false"
-                    tools:listitem="@layout/item_product_grid"/>
+                    tools:listitem="@layout/item_product_grid" />
+
+
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
@@ -257,6 +270,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:layout_gravity="bottom"
             android:background="@android:color/transparent"
             app:elevation="0dp"
             app:itemIconTint="@color/bottom_nav_color_selector"
@@ -266,18 +280,19 @@
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
+    <!-- Nút Chatbot -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_cart"
-        android:layout_width="wrap_content"
+        android:layout_width="137dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/cart_description"
         android:src="@drawable/ic_cart"
         app:backgroundTint="@color/orange"
-        app:tint="@android:color/white"
-        app:layout_anchor="@id/bottom_app_bar"
+        app:layout_anchor="@+id/bottom_app_bar"
+        app:layout_anchorGravity="center"
         app:maxImageSize="30dp"
-        android:contentDescription="@string/cart_description" />
+        app:tint="@android:color/white" />
 
-    <!-- Nút Chatbot -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_chat"
         android:layout_width="wrap_content"
@@ -303,7 +318,7 @@
         app:backgroundTint="@android:color/white"
         app:tint="@null"
         app:elevation="6dp"
-        android:tooltipText="Gợi ý món ngon"
+        android:tooltipText="@string/ai_recommend_tooltip"
         android:contentDescription="AI Recommendation" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package com.example.myapplication.UI.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -34,17 +35,29 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
     private List<Address> addressList;
     private DatabaseReference addressesRef;
 
+    private boolean isSelectionMode = false;
+    public static final String EXTRA_SELECTED_ADDRESS = "EXTRA_SELECTED_ADDRESS";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddressBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Check selection mode
+        if (getIntent().hasExtra("IS_SELECTION_MODE")) {
+            isSelectionMode = getIntent().getBooleanExtra("IS_SELECTION_MODE", false);
+            if (isSelectionMode) {
+                // Change title optionally
+                binding.toolbar.setTitle("Chọn địa chỉ");
+            }
+        }
+
         setSupportActionBar(binding.toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        binding.toolbar.setNavigationOnClickListener(v -> finish());
+        // Navigation click listener moved to setupListeners
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -69,6 +82,7 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
 
     private void setupListeners() {
         binding.fabAddAddress.setOnClickListener(v -> showAddAddressDialog());
+        binding.toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     private void loadAddresses() {
@@ -90,7 +104,8 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AddressActivity.this, "Lỗi tải dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddressActivity.this, "Lỗi tải dữ liệu: " + error.getMessage(), Toast.LENGTH_SHORT)
+                        .show();
             }
         });
     }
@@ -152,8 +167,10 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
         if (addressId != null) {
             Address newAddress = new Address(addressId, name, phone, fullAddress, false);
             addressesRef.child(addressId).setValue(newAddress)
-                    .addOnSuccessListener(aVoid -> Toast.makeText(AddressActivity.this, "Đã thêm địa chỉ", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(e -> Toast.makeText(AddressActivity.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                    .addOnSuccessListener(
+                            aVoid -> Toast.makeText(AddressActivity.this, "Đã thêm địa chỉ", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast
+                            .makeText(AddressActivity.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 
@@ -164,7 +181,8 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
                 .setMessage("Bạn có chắc chắn muốn xóa địa chỉ này?")
                 .setPositiveButton("Xóa", (dialog, which) -> {
                     addressesRef.child(address.getId()).removeValue()
-                            .addOnSuccessListener(aVoid -> Toast.makeText(AddressActivity.this, "Đã xóa địa chỉ", Toast.LENGTH_SHORT).show());
+                            .addOnSuccessListener(aVoid -> Toast
+                                    .makeText(AddressActivity.this, "Đã xóa địa chỉ", Toast.LENGTH_SHORT).show());
                 })
                 .setNegativeButton("Hủy", null)
                 .show();
@@ -172,6 +190,11 @@ public class AddressActivity extends AppCompatActivity implements AddressAdapter
 
     @Override
     public void onAddressClick(Address address) {
-        // Có thể mở rộng để chỉnh sửa sau này
+        if (isSelectionMode) {
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_SELECTED_ADDRESS, address);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 }

@@ -27,7 +27,8 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(String orderId, String userId, List<CartItem> cartItems, double totalAmount, long orderDate, String customerName, String phoneNumber, String shippingAddress, String paymentMethod, String status) {
+    public Order(String orderId, String userId, List<CartItem> cartItems, double totalAmount, long orderDate,
+            String customerName, String phoneNumber, String shippingAddress, String paymentMethod, String status) {
         this.orderId = orderId;
         this.userId = userId;
         this.cartItems = cartItems;
@@ -42,26 +43,74 @@ public class Order implements Serializable {
         this.timestamp = orderDate;
         this.totalPrice = totalAmount;
         // THE FIX: Updated date format to include year
-        this.formattedDate = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("vi", "VN")).format(new Date(orderDate));
+        this.formattedDate = new SimpleDateFormat("dd/MM/yyyy HH:mm", new Locale("vi", "VN"))
+                .format(new Date(orderDate));
     }
 
     // Getters and Setters for new fields
-    public String getOrderId() { return orderId; }
-    public void setOrderId(String orderId) { this.orderId = orderId; }
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public List<CartItem> getCartItems() { return cartItems; }
-    public void setCartItems(List<CartItem> cartItems) { this.cartItems = cartItems; }
-    public double getTotalAmount() { return totalAmount; }
-    public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
-    public long getOrderDate() { return orderDate; }
-    public void setOrderDate(long orderDate) { this.orderDate = orderDate; }
-    public String getShippingAddress() { return shippingAddress; }
-    public void setShippingAddress(String shippingAddress) { this.shippingAddress = shippingAddress; }
-    public String getPaymentMethod() { return paymentMethod; }
-    public void setPaymentMethod(String paymentMethod) { this.paymentMethod = paymentMethod; }
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
+    public double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public long getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(long orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getFormattedDate() {
         if (formattedDate == null || formattedDate.isEmpty()) {
@@ -74,16 +123,53 @@ public class Order implements Serializable {
         }
         return formattedDate;
     }
-    public void setFormattedDate(String formattedDate) { this.formattedDate = formattedDate; }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
+    }
 
     // Getters and Setters for legacy fields
-    public String getCustomerName() { return customerName; }
-    public void setCustomerName(String customerName) { this.customerName = customerName; }
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    public long getTimestamp() { return timestamp; }
-    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
-    public double getTotalPrice() { return totalPrice; }
-    public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    // Shipping Fee
+    private double shippingFee;
+
+    public double getShippingFee() {
+        return shippingFee;
+    }
+
+    public void setShippingFee(double shippingFee) {
+        this.shippingFee = shippingFee;
+    }
 
 }

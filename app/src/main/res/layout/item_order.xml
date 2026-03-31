@@ -1,131 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="8dp"
+    android:layout_marginHorizontal="16dp"
     android:layout_marginTop="8dp"
-    android:layout_marginBottom="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="1dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/white_surface"
+    android:clickable="true"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" 
-        android:padding="16dp"
-        android:gravity="center_vertical">
+        android:orientation="vertical"
+        android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/ivProductThumbnail" 
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/ic_coffee_2"
-            android:contentDescription="Hình ảnh sản phẩm" />
-
+        <!-- Top Row: Thumbnail | Content | Status -->
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="16dp"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="top">
 
-            <!-- Changed to display Product Name instead of Order ID -->
-            <TextView
-                android:id="@+id/tvOrderId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                tools:text="1. Cà phê sữa đá"
-                android:textSize="16sp" />
+            <!-- Thumbnail -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivProductThumbnail"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedSquare"
+                tools:src="@drawable/coffee_image"
+                android:contentDescription="Thumbnail đơn hàng" />
 
-            <TextView
-                android:id="@+id/tvOrderDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:text="10:30, 25/05/2024"
-                android:textSize="12sp" />
-
+            <!-- Content Area -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvOrderId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/brown_700"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="Cà phê Sữa Đá và 1 món khác"
+                    android:lineSpacingExtra="2dp" />
+
+                <TextView
+                    android:id="@+id/tvOrderDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/text_secondary"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    tools:text="10:30, 25/05/2024" />
 
                 <TextView
                     android:id="@+id/tvOrderTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/brown_900"
+                    android:textAppearance="?attr/textAppearanceLabelLarge"
                     android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"
-                    tools:text="150.000 ₫"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tvOrderStatus"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:textStyle="bold"
-                    tools:text="Đang xử lý"
-                    tools:textColor="@android:color/holo_orange_dark"
-                    android:textSize="16sp" />
+                    tools:text="150.000đ" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <!-- Status Chip -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/tvOrderStatus"
+                style="@style/Widget.Material3.Chip.Assist.Elevated"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="end"
-                android:orientation="horizontal">
-
-                <!-- Nút Xác nhận hoàn thành mới -->
-                <Button
-                    android:id="@+id/btnConfirmCompleted"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Xác nhận hoàn thành"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="#4CAF50"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"
-                    android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle"/>
-
-                <Button
-                    android:id="@+id/btnCancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Hủy"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="#F44336"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"
-                    android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle"/>
-
-                <Button
-                    android:id="@+id/btnReorder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:text="Mua lại"
-                    android:textSize="12sp"
-                    android:textColor="@android:color/white"
-                    app:backgroundTint="?attr/colorPrimary"
-                    android:visibility="gone"
-                    android:textAllCaps="false"
-                    style="?android:attr/borderlessButtonStyle"/>
-            </LinearLayout>
+                app:chipMinHeight="32dp"
+                android:padding="0dp"
+                android:clickable="false"
+                android:textSize="11sp"
+                app:chipSurfaceColor="@android:color/transparent"
+                app:textStartPadding="8dp"
+                app:textEndPadding="8dp"
+                tools:text="Đã hủy"
+                tools:textColor="@color/status_cancelled" />
 
         </LinearLayout>
+
+        <!-- Fixed Height Action Row -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancel"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="@string/cancel_label"
+                    android:textAllCaps="false"
+                    android:textColor="@color/status_cancelled"
+                    app:strokeColor="@color/status_cancelled"
+                    app:strokeWidth="1dp"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    app:cornerRadius="8dp"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnConfirmCompleted"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="8dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:backgroundTint="@color/status_completed"
+                    android:text="@string/confirm_label"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    app:cornerRadius="8dp"
+                    tools:visibility="visible" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReorder"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:backgroundTint="@color/brown_500"
+                    android:text="@string/reorder_label"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    app:cornerRadius="8dp"
+                    tools:visibility="visible" />
+                
+                <!-- Secondary action when others are hidden -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDetail"
+                    style="@style/Widget.Material3.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:text="Xem chi tiết"
+                    android:textAllCaps="false"
+                    android:textColor="@color/brown_500"
+                    android:textSize="13sp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </FrameLayout>
+
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

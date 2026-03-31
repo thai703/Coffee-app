@@ -14,7 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/coffee_brown"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Thanh toán"
+        app:title="@string/checkout_title"
         app:titleTextColor="@color/white"
         app:navigationIcon="@drawable/ic_arrow_back" />
 
@@ -54,7 +54,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Địa chỉ nhận hàng"
+                            android:text="@string/shipping_address"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textSize="16sp"
@@ -66,7 +66,7 @@
                             android:id="@+id/btn_change_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thay đổi"
+                            android:text="@string/change_button"
                             android:textColor="@color/coffee_brown"
                             android:textStyle="bold"
                             android:padding="4dp"/>
@@ -83,7 +83,7 @@
                         android:id="@+id/tv_user_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tên người nhận"
+                        android:text="@string/recipient_name"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="14sp" />
@@ -92,7 +92,7 @@
                         android:id="@+id/tv_user_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Số điện thoại"
+                        android:text="@string/phone_number"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" 
                         android:layout_marginTop="4dp"/>
@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Địa chỉ giao hàng"
+                        android:text="@string/delivery_address"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -125,7 +125,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Danh sách món"
+                        android:text="@string/order_items"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -160,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phương thức thanh toán"
+                        android:text="@string/payment_method"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -178,23 +178,17 @@
                             android:id="@+id/rb_cash_on_delivery"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Thanh toán tiền mặt"
+                            android:text="@string/pay_cash"
                             android:checked="true"
                             android:buttonTint="@color/coffee_brown"/>
 
                         <RadioButton
-                            android:id="@+id/rb_momo"
+                            android:id="@+id/rb_vnpay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Ví MoMo"
+                            android:text="@string/vnpay_wallet"
                             android:buttonTint="@color/coffee_brown"/>
 
-                        <RadioButton
-                            android:id="@+id/rb_vcb"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Chuyển khoản ngân hàng (VCB)"
-                            android:buttonTint="@color/coffee_brown"/>
                     </RadioGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -216,7 +210,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chi tiết thanh toán"
+                        android:text="@string/checkout_details"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="16sp"
@@ -233,7 +227,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Tổng tiền hàng"
+                            android:text="@string/total_items_price"
                             android:textColor="@color/text_secondary"/>
                         <TextView
                             android:id="@+id/tv_subtotal"
@@ -258,7 +252,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Tổng thanh toán"
+                            android:text="@string/total_payment"
                             android:textColor="@color/black"
                             android:textStyle="bold"
                             android:textSize="16sp"/>
@@ -291,7 +285,7 @@
             android:id="@+id/btn_confirm_order"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xác nhận đơn hàng"
+            android:text="@string/confirm_order"
             android:textColor="@color/white"
             android:backgroundTint="@color/coffee_brown"
             app:layout_constraintBottom_toBottomOf="parent"

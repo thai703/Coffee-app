@@ -63,6 +63,11 @@
             android:name=".UI.profile.AddressActivity"
             android:exported="false" />
             
+        <activity
+            android:name=".UI.settings.SettingsActivity"
+            android:exported="false"
+            android:label="Cài đặt"/>
+            
         <!-- Product & Cart -->
         <activity
             android:name=".UI.product.ProductListActivity"
@@ -85,10 +90,26 @@
             android:name=".UI.checkout.CheckoutActivity"
             android:exported="false" />
         <activity
+            android:name=".UI.checkout.VNPayReturnActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="coffeeapp"
+                    android:host="vnpay_return" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".UI.checkout.OrderConfirmationActivity"
             android:exported="false" />
         <activity 
             android:name=".UI.order.OrderSuccessActivity" 
+            android:exported="false" />
+        <activity
+            android:name=".UI.order.UserOrderDetailActivity"
             android:exported="false" />
         <activity
             android:name=".UI.order.OrderHistoryActivity"
@@ -143,6 +164,14 @@
             
         <activity
             android:name=".UI.qr.QRCodeActivity"
+            android:exported="false" />
+            
+        <activity
+            android:name=".UI.notification.NotificationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UI.Rating.AddRatingActivity"
             android:exported="false" />
 
         <service

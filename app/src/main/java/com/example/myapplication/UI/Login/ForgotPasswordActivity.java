@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.R;
 import com.example.myapplication.databinding.ActivityForgotPasswordBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -36,7 +37,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         String email = binding.etForgotEmail.getText().toString().trim();
 
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etForgotEmail.setError("Vui lòng nhập email hợp lệ.");
+            binding.etForgotEmail.setError(getString(R.string.err_invalid_email_format));
             binding.etForgotEmail.requestFocus();
             return;
         }
@@ -47,10 +48,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     setLoading(false);
                     if (task.isSuccessful()) {
-                        Toast.makeText(ForgotPasswordActivity.this, "Yêu cầu đã được gửi. Vui lòng kiểm tra email của bạn.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ForgotPasswordActivity.this, getString(R.string.msg_reset_email_sent),
+                                Toast.LENGTH_LONG).show();
                         finish();
                     } else {
-                        Toast.makeText(ForgotPasswordActivity.this, "Gửi yêu cầu thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        String errorMsg = task.getException() != null ? task.getException().getMessage() : "";
+                        Toast.makeText(ForgotPasswordActivity.this,
+                                getString(R.string.err_reset_email_failed_prefix, errorMsg), Toast.LENGTH_LONG).show();
                     }
                 });
     }

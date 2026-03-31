@@ -111,9 +111,3 @@ Tải file google-services.json từ Firebase Console.
 Copy file này vào thư mục app/ trong project Android Studio: COFFEEAPP_DACN/app/google-services.json
 
 Nhấn Sync Project with Gradle Files.
-
-💬 Contact
-Mọi thắc mắc hoặc góp ý phát triển, vui lòng liên hệ:
-📧 Email: [phamlegiathinh2004@gmail.com] 🔗 GitHub: JaThinh
-
-© 2025 Coffee Shop App - Developed by JaThinh

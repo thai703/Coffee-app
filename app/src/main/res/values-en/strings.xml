@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aura Cafe</string>
+    <string name="app_name_branded">☕ Aura Cafe ☕</string>
+    <!-- Home Screen Strings -->
+    <string name="action_more">More options</string>
+    <string name="action_notification">Notifications</string>
+    <string name="action_favorite">Favorite</string>
+    <string name="search_hint">Search your favorite drinks...</string>
+    <string name="category_title">Categories</string>
+    <string name="popular_title">Popular</string>
+    <string name="view_all">View All</string>
+    <string name="cart_description">Cart</string>
+    <string name="chatbot_description">AI Chatbot</string>
+    <string name="welcome_greeting">Hello!</string>
+    <string name="ai_recommend_tooltip">Delicious items suggested</string>
+
+    <!-- Login & Register -->
+    <string name="login_subtitle">Login to explore the world of coffee</string>
+    <string name="login_button">Login</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or_divider">Or</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="no_account_prompt">Do not have an account?</string>
+    <string name="register_now">Register now</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="phone_hint">Phone Number</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="register_title">Create Account</string>
+    <string name="register_button">Register</string>
+    <string name="already_have_account">Already have an account?</string>
+
+    <!-- Product Detail -->
+    <string name="description_label">Description</string>
+    <string name="choose_size">Choose Size</string>
+    <string name="choose_sugar">Choose Sugar</string>
+    <string name="choose_ice">Choose Ice</string>
+    <string name="extra_toppings">Extra Toppings</string>
+    <string name="customer_reviews">Customer Reviews</string>
+    <string name="no_reviews_yet">No reviews for this product yet.</string>
+    <string name="add_to_cart">Add to Cart</string>
+
+    <!-- Cart & Checkout -->
+    <string name="cart_title">Cart</string>
+    <string name="empty_cart_title">Your cart is empty</string>
+    <string name="empty_cart_subtitle">Start shopping to fill your cart!</string>
+    <string name="continue_shopping">Continue Shopping</string>
+    <string name="subtotal_label">Subtotal:</string>
+    <string name="shipping_fee_label">Shipping Fee:</string>
+    <string name="total_label">Total:</string>
+    <string name="confirm_purchase">Confirm Purchase</string>
+    
+    <string name="checkout_title">Checkout</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="change_button">Change</string>
+    <string name="recipient_name">Recipient Name</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="order_items">Order Items</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="pay_cash">Cash on Delivery</string>
+    <string name="momo_wallet">MoMo Wallet</string>
+    <string name="vnpay_wallet">VNPay Wallet</string>
+    <string name="vnpay_processing">Processing VNPay payment...</string>
+    <string name="bank_transfer">Bank Transfer (VCB)</string>
+    <string name="checkout_details">Checkout Details</string>
+    <string name="total_items_price">Total Items Price</string>
+    <string name="total_payment">Total Payment</string>
+    <string name="confirm_order">Confirm Order</string>
+
+    <!-- Orders -->
+    <string name="order_history_title">Order History</string>
+    <string name="no_orders_yet">You have no orders yet</string>
+    <string name="no_notifications_yet">No notifications yet</string>
+    <string name="no_orders_subtitle">Start shopping and create your first order!</string>
+    <string name="start_ordering">Start Ordering</string>
+    <string name="order_detail_title">Order Details</string>
+    <string name="customer_info">Customer Info</string>
+    <string name="order_info">Order Info</string>
+    <string name="order_id_prefix">"Order ID: "</string>
+    <string name="order_date_prefix">"Order Date: "</string>
+    <string name="products_label">Products</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="confirm_label">Confirm</string>
+
+    <string name="label_name">"Name: "</string>
+    <string name="label_phone">"Phone Number: "</string>
+    <string name="label_address">"Address: "</string>
+    <string name="action_reorder">Reorder</string>
+    <string name="action_confirm_received">Order Received</string>
+
+    <string name="status_pending_icon">⏳ Pending</string>
+    <string name="status_shipping_icon">🛵 Shipping</string>
+    <string name="status_completed_icon">✅ Completed</string>
+    <string name="status_cancelled_icon">❌ Cancelled</string>
+    <string name="order_prefix">Order</string>
+    <string name="items_other">and %d others</string>
+
+    <string name="msg_cancel_success">Order cancelled</string>
+    <string name="msg_confirm_success">Order confirmed completed</string>
+    <string name="msg_reorder_added">Items added to cart!</string>
+    <string name="msg_no_item_reorder">No items in this order to reorder.</string>
+    <string name="msg_login_reorder">Please login to reorder.</string>
+    <string name="order_not_found">Order not found</string>
+
+    <!-- Settings & Profile -->
+    <string name="settings_title">Settings</string>
+    <string name="account_section">Account</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="utilities_section">Utilities</string>
+    <string name="notifications">App Notifications</string>
+    <string name="system_language">System Language</string>
+    <string name="support_section">Support</string>
+    <string name="help_center">Help Center</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="about_aura">About Aura Coffee</string>
+    <string name="logout_device">Logout from device</string>
+
+    <!-- Profile Menu -->
+    <string name="my_orders">Order History</string>
+    <string name="settings">Settings</string>
+
+    <!-- Profile Specific -->
+    <string name="my_profile_title">My Profile</string>
+    <string name="order_history">Order History</string>
+    <string name="address_book">Address Book</string>
+    <string name="logout">Logout</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Home</string>
+    <string name="nav_menu">Menu</string>
+    <string name="nav_support">Support</string>
+    <string name="nav_profile">Profile</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="reorder_label">Reorder</string>
+    <string name="err_enter_email">Please enter Email</string>
+    <string name="err_invalid_email">Invalid Email</string>
+    <string name="err_enter_password">Please enter password</string>
+    <string name="err_incorrect_password">Incorrect password</string>
+    <string name="err_account_not_exist">Account does not exist!</string>
+    <string name="err_login_failed">Login failed! Please try again.</string>
+    <string name="err_reenter">Please re-enter</string>
+    <string name="err_empty_fullname">Full name cannot be empty.</string>
+    <string name="err_empty_email">Email cannot be empty.</string>
+    <string name="err_invalid_email_format">Please enter a valid email.</string>
+    <string name="err_empty_password">Password cannot be empty.</string>
+    <string name="err_password_short">Password must be at least 6 characters.</string>
+    <string name="err_password_mismatch">Passwords do not match.</string>
+    <string name="status_register_success">Registration successful!</string>
+    <string name="status_register_failed">Registration failed: </string>
+    <string name="status_db_error">Error saving user information.</string>
+    <string name="tab_all">All</string>
+    <string name="tab_pending">Pending</string>
+    <string name="tab_completed">Completed</string>
+    <string name="status_order_success">Your order has been created successfully!</string>
+    <string name="placeholder_no_name">No name provided</string>
+    <string name="placeholder_no_phone">No phone provided</string>
+    <string name="placeholder_no_address">No address provided</string>
+    <string name="err_load_user_info">Error loading user info</string>
+    <string name="err_order_failed">Unable to place order. Please try again.</string>
+    <string name="status_pending">Pending</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_cancelled">Cancelled</string>
+    <string name="label_order_date">Order Date</string>
+    <string name="msg_please_choose_size">Please choose a size</string>
+    <string name="msg_add_to_cart_success">Successfully added to cart!</string>
+    <string name="msg_product_in_cart">Product is already in cart</string>
+    <string name="msg_add_to_cart_error">Error adding to cart</string>
+    <string name="msg_added_to_favorites">Added %s to favorites!</string>
+    <string name="msg_invalid_price">Invalid product price.</string>
+    <string name="msg_added_to_cart">Added %s to cart</string>
+    <string name="msg_ai_analyzing">AI is analyzing your preferences...</string>
+    <string name="edit_profile_title">Edit Profile</string>
+    <string name="personal_info_label">Personal Information</string>
+    <string name="address_hint">Address</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="role_label">Role</string>
+    <string name="err_login_required">You need to log in to perform this action.</string>
+    <string name="err_enter_fullname">Please enter your full name</string>
+    <string name="err_enter_phone">Please enter your phone number</string>
+    <string name="status_update_success">Profile updated successfully!</string>
+    <string name="status_update_failed">Error updating profile</string>
+    <string name="status_uploading">Uploading image...</string>
+    <string name="err_load_current_info">Unable to load current information.</string>
+    <string name="err_name_required">Name cannot be empty.</string>
+    <string name="err_upload_image_prefix">Image upload error: %s</string>
+    <string name="err_update_profile_prefix">Update error: %s</string>
+    <string name="back_button_desc">Back</string>
+    <string name="title_settings">Settings</string>
+    <string name="msg_notification_status">Notification: %s</string>
+    <string name="status_on">On</string>
+    <string name="status_off">Off</string>
+    <string name="msg_help_center_developing">Help Center is under development</string>
+    <string name="dialog_privacy_title">Privacy Policy</string>
+    <string name="dialog_privacy_content">We are committed to protecting your personal information. Your data is used to process orders and improve the shopping experience at Aura Coffee.</string>
+    <string name="dialog_about_title">About Aura Coffee</string>
+    <string name="dialog_about_content">Aura Coffee - Enjoy pure coffee flavor in a modern space.\n\nVersion: 1.0.0\nDeveloped by: JaThinh Team</string>
+    <string name="action_close">Close</string>
+    <string name="title_select_language">Select Language</string>
+    <string name="err_fill_all_fields">Please fill in all fields</string>
+    <string name="status_password_changed">Password changed successfully!</string>
+    <string name="err_password_update">Error updating password</string>
+    <string name="err_incorrect_old_password">Incorrect old password</string>
+
+
+    <!-- Support -->
+    <string name="support_header">Customer Support</string>
+    <string name="support_intro">Hello, how can I help you?</string>
+    <string name="support_thank_you">Thank you for contacting us. We will respond as soon as possible.</string>
+    <string name="hide_message_hint">Enter message...</string>
+    <string name="quantity_display">x%d</string>
+    <string name="intro_discover">Discover</string>
+    <string name="intro_welcome_slogan">Welcome to Aura Cafe</string>
+    <string name="intro_experience_now">Experience Now</string>
+    <string name="hint_current_password">Current Password</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="hint_confirm_new_password">Confirm New Password</string>
+
+    <!-- Notification Actions -->
+    <string name="action_mark_all_read">Mark all as read</string>
+    <string name="action_mark_read">Mark as read</string>
+    <string name="action_mark_unread">Mark as unread</string>
+    <string name="action_delete_notif">Delete notification</string>
+    <string name="msg_mark_all_read">All marked as read</string>
+
+    <!-- Notification Content -->
+    <string name="notif_sys_welcome_title">Welcome new member!</string>
+    <string name="notif_sys_welcome_msg">Welcome to Aura Coffee. Enter code HELLO to get 10% off your first order.</string>
+    <string name="notif_promo_title">20% OFF Black Coffee</string>
+    <string name="notif_promo_msg">Today only! 20% off all Black Coffee items. Order now!</string>
+    
+    <string name="notif_title_pending">Order Pending</string>
+    <string name="notif_msg_pending">Order %1$s (%2$s) is pending confirmation. Tap to view details.</string>
+    <string name="notif_title_shipping">Order Shipping - Please Confirm</string>
+    <string name="notif_msg_shipping">Shipper is delivering %1$s. Tap here to CONFIRM receipt.</string>
+    <string name="notif_title_completed">Order Completed</string>
+    <string name="notif_msg_completed">You received %1$s. Thank you for your support!</string>
+    <string name="notif_title_cancelled">Order Cancelled</string>
+    <string name="notif_msg_cancelled">Order %1$s has been cancelled.</string>
+    <string name="notif_product_info_multi">%1$s and %2$d others</string>
+    <string name="notif_order_not_found">Order not found</string>
+    <string name="notif_promo_detail">Promo details: %1$s</string>
+
+    <!-- Product Options -->
+    <string name="size_m">M (Medium)</string>
+    <string name="size_l">L (Large)</string>
+    <string name="sugar_100">100% Sugar</string>
+    <string name="sugar_70">70% Sugar</string>
+    <string name="ice_100">100% Ice</string>
+    <string name="ice_50">50% Ice</string>
+
+    <!-- Home Greeting -->
+    <string name="greeting_hello">Hello!</string>
+
+    <!-- Categories -->
+    <string name="cat_all">All</string>
+    <string name="cat_coffee">Coffee</string>
+    <string name="cat_tea">Tea</string>
+    <string name="cat_smoothie">Smoothie</string>
+    <string name="cat_pastry">Pastry</string>
+
+    <!-- Forgot Password -->
+    <string name="title_forgot_password">Forgot Password</string>
+    <string name="prompt_enter_email">Please enter your registered email to reset password.</string>
+    <string name="action_send_code">Send Request</string>
+    <string name="msg_reset_email_sent">Reset request sent. Please check your email.</string>
+    <string name="err_reset_email_failed_prefix">Failed to send request: %s</string>
+</resources>

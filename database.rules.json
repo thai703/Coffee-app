@@ -2,7 +2,24 @@
   "rules": {
     "products": {
       ".read": "true",
-      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'"
+      ".write": "auth != null && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+      "$productId": {
+        "ratings": {
+          "$userId": {
+            ".write": "auth != null && auth.uid === $userId",
+            ".validate": "newData.hasChildren(['stars', 'comment', 'timestamp']) && newData.child('stars').isNumber() && newData.child('stars').val() >= 1 && newData.child('stars').val() <= 5"
+          }
+        },
+        "ratingSummary": {
+          ".write": "auth != null"
+        },
+        "rating": {
+          ".write": "auth != null"
+        },
+        "ratingCount": {
+          ".write": "auth != null"
+        }
+      }
     },
     "categories": {
       ".read": "true",

@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/cream_bg"
     tools:context=".UI.order.OrderHistoryActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_order_history"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="Lịch sử đơn hàng"
-            app:navigationIcon="@drawable/ic_arrow_back" />
+            app:title="@string/order_history_title"
+            app:titleTextColor="@color/brown_700"
+            app:navigationIcon="@drawable/ic_back"
+            app:navigationIconTint="@color/brown_700" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:tabIndicatorColor="@color/brown_500"
+            app:tabIndicatorHeight="3dp"
+            app:tabSelectedTextColor="@color/brown_700"
+            app:tabTextColor="@color/text_secondary"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabRippleColor="@null"/>
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/app_bar_layout"
-        android:contentDescription="Lọc đơn hàng theo trạng thái"
-        app:tabMode="fixed"
-        app:tabGravity="fill"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_orders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tab_layout_status" 
         android:clipToPadding="false"
-        android:padding="8dp"
+        android:paddingHorizontal="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="20dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_order" />
 
     <!-- Empty State Layout -->
@@ -46,38 +54,44 @@
         android:id="@+id/layout_empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone" 
+        android:visibility="gone"
         tools:visibility="visible">
 
         <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_empty_box" 
-            app:tint="@color/grey" />
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:src="@drawable/ic_empty_box"
+            app:tint="@color/brown_200" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Bạn chưa có đơn hàng nào"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+            android:text="@string/no_orders_yet"
+            android:textColor="@color/brown_700"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Hãy bắt đầu mua sắm và tạo đơn hàng đầu tiên của bạn!"
-            android:textAlignment="center" />
+            android:text="@string/no_orders_subtitle"
+            android:textAlignment="center"
+            android:textColor="@color/text_secondary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_start_shopping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Bắt đầu đặt hàng" />
+            app:cornerRadius="12dp"
+            android:backgroundTint="@color/brown_500"
+            android:text="@string/start_ordering"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
@@ -86,8 +100,8 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_gravity="center"
         android:visibility="gone"
         tools:visibility="visible" />
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

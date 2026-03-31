@@ -29,6 +29,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.UI.Home.HomeActivity;
 import com.example.myapplication.UI.admin.AdminHomeActivity;
 import com.example.myapplication.databinding.ActivityLoginBinding;
+import com.example.myapplication.manager.LanguageHelper;
 import com.example.myapplication.manager.CartManager;
 import com.example.myapplication.model.User;
 import com.example.myapplication.util.SessionManager;
@@ -65,12 +66,14 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LanguageHelper.loadLocale(this);
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         mAuth = FirebaseAuth.getInstance();
         sessionManager = new SessionManager(getApplicationContext());
+        CartManager.getInstance().init(getApplicationContext()); // Ensure initialized
 
         binding.getRoot().postDelayed(this::checkLoginStatus, 100);
 
@@ -102,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
             if (v instanceof EditText) {
                 Rect outRect = new Rect();
                 v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int)ev.getRawX(), (int)ev.getRawY())) {
+                if (!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
                     v.clearFocus();
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
@@ -130,14 +133,21 @@ public class LoginActivity extends AppCompatActivity {
         binding.btnGoogleSignIn.setOnClickListener(v -> signInWithGoogle());
 
         TextWatcher clearErrorTextWatcher = new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 0) {
                     binding.tilEmail.setError(null);
                     binding.tilPassword.setError(null);
                 }
             }
-            @Override public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         };
         binding.etEmail.addTextChangedListener(clearErrorTextWatcher);
         binding.etPassword.addTextChangedListener(clearErrorTextWatcher);
@@ -158,30 +168,30 @@ public class LoginActivity extends AppCompatActivity {
         setLoading(true);
 
         mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this, task -> {
-                setLoading(false);
-                if (task.isSuccessful()) {
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    if (user != null) {
-                        prepareNewSession(user.getUid());
+                .addOnCompleteListener(this, task -> {
+                    setLoading(false);
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            prepareNewSession(user.getUid());
+                        }
+                    } else {
+                        handleLoginFailure(task.getException());
                     }
-                } else {
-                    handleLoginFailure(task.getException());
-                }
-            });
+                });
     }
 
     private boolean validateInput(String email, String password) {
         if (TextUtils.isEmpty(email)) {
-            binding.tilEmail.setError("Vui lòng nhập Email");
+            binding.tilEmail.setError(getString(R.string.err_enter_email));
             binding.etEmail.requestFocus();
             vibrateDevice();
             return false;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.tilEmail.setError("Email không hợp lệ");
-            binding.tilPassword.setError("Vui lòng nhập lại");
+            binding.tilEmail.setError(getString(R.string.err_invalid_email));
+            binding.tilPassword.setError(getString(R.string.err_reenter));
             binding.etEmail.setText("");
             binding.etPassword.setText("");
             binding.etEmail.requestFocus();
@@ -190,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(password)) {
-            binding.tilPassword.setError("Vui lòng nhập mật khẩu");
+            binding.tilPassword.setError(getString(R.string.err_enter_password));
             binding.etPassword.requestFocus();
             vibrateDevice();
             return false;
@@ -201,21 +211,21 @@ public class LoginActivity extends AppCompatActivity {
     private void handleLoginFailure(Exception exception) {
         if (exception instanceof FirebaseAuthInvalidCredentialsException) {
             // SAI MẬT KHẨU -> Chỉ báo lỗi & xóa ô mật khẩu
-            binding.tilPassword.setError("Mật khẩu không chính xác");
+            binding.tilPassword.setError(getString(R.string.err_incorrect_password));
             binding.etPassword.setText("");
             binding.etPassword.requestFocus();
         } else if (exception instanceof FirebaseAuthInvalidUserException) {
             // TÀI KHOẢN KHÔNG TỒN TẠI -> Xóa cả 2
-            Toast.makeText(LoginActivity.this, "Tài khoản không tồn tại!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, getString(R.string.err_account_not_exist), Toast.LENGTH_SHORT).show();
             clearAllFieldsForNewLogin();
         } else {
             // LỖI KHÁC -> Xóa cả 2
-            Toast.makeText(LoginActivity.this, "Đăng nhập thất bại! Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, getString(R.string.err_login_failed), Toast.LENGTH_SHORT).show();
             clearAllFieldsForNewLogin();
         }
         vibrateDevice();
     }
-    
+
     private void clearAllFieldsForNewLogin() {
         binding.tilEmail.setError("Thông tin không chính xác");
         binding.tilPassword.setError("Thông tin không chính xác");
@@ -283,9 +293,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 FirebaseUser authUser = mAuth.getCurrentUser();
-                if (authUser == null) return;
+                if (authUser == null)
+                    return;
 
-                User dbUser = snapshot.getValue(User.class);
+                User dbUser = null;
+                try {
+                    dbUser = snapshot.getValue(User.class);
+                } catch (Exception e) {
+                    Log.e(TAG, "Error parsing user data: " + e.getMessage());
+                    // Fallback: treat as if user doesn't exist in DB yet, or create default
+                }
+
                 if (dbUser != null) {
                     String role = (dbUser.getRole() != null) ? dbUser.getRole() : SessionManager.ROLE_USER;
                     sessionManager.createLoginSession(userId, role, true);
@@ -313,14 +331,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToCorrectActivity(String role) {
-        Intent intent = new Intent(this, SessionManager.ROLE_ADMIN.equals(role) ? AdminHomeActivity.class : HomeActivity.class);
+        Intent intent = new Intent(this,
+                SessionManager.ROLE_ADMIN.equals(role) ? AdminHomeActivity.class : HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
 
     private void setLoading(boolean isLoading) {
-        if (binding == null) return;
+        if (binding == null)
+            return;
         binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         binding.btnLogin.setEnabled(!isLoading);
         binding.btnGoogleSignIn.setEnabled(!isLoading);
@@ -336,7 +356,8 @@ public class LoginActivity extends AppCompatActivity {
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            if (imm != null)
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
@@ -350,10 +371,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-    
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (executorService != null) executorService.shutdown();
+        if (executorService != null)
+            executorService.shutdown();
     }
 }

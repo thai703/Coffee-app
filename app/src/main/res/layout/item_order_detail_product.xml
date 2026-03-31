@@ -1,77 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp">
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/iv_product_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop"
-            tools:src="@drawable/coffee_image" />
+        android:orientation="vertical"
+        android:padding="12dp">
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_product_image"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/RoundedSquare"
+                tools:src="@drawable/coffee_image" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_product_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/brown_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Cà Phê Sữa Đá" />
+
+                <TextView
+                    android:id="@+id/tv_product_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    tools:text="Size: M, 70% đường, 100% đá" />
+
+                <TextView
+                    android:id="@+id/tv_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/brown_500"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="x1" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_product_name"
+                android:id="@+id/tv_product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textColor="@color/premium_accent"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                tools:text="Cà Phê Sữa Đá" />
-
-            <TextView
-                android:id="@+id/tv_product_options"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                tools:text="Size: M, 70% đường, 100% đá" />
-
-            <TextView
-                android:id="@+id/tv_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:text="Số lượng: 1" />
+                tools:text="45.000đ" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_product_price"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_rate_product"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            tools:text="45,000đ" />
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:text="Viết đánh giá"
+            android:textColor="@color/brown_500"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:icon="@drawable/ic_star"
+            app:iconSize="14dp"
+            app:iconTint="@color/brown_500"
+            tools:visibility="visible" />
 
     </LinearLayout>
-
-    <!-- THE FIX: Add a button for rating the product -->
-    <Button
-        android:id="@+id/btn_rate_product"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:text="Viết đánh giá"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>

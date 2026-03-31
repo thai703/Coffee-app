@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.chip.Chip;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
@@ -27,8 +28,11 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     public interface OnItemClickListener {
         void onItemClick(Order order);
+
         void onCancelOrder(Order order);
+
         void onReorder(Order order);
+
         void onConfirmCompleted(Order order);
     }
 
@@ -62,9 +66,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     }
 
     static class OrderViewHolder extends RecyclerView.ViewHolder {
-        TextView tvOrderId, tvOrderDate, tvOrderTotal, tvOrderStatus;
+        TextView tvOrderId, tvOrderDate, tvOrderTotal;
+        Chip tvOrderStatus;
         ImageView ivProductThumbnail;
-        Button btnCancel, btnReorder, btnConfirmCompleted;
+        Button btnCancel, btnReorder, btnConfirmCompleted, btnDetail;
 
         OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,25 +81,25 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             btnCancel = itemView.findViewById(R.id.btnCancel);
             btnReorder = itemView.findViewById(R.id.btnReorder);
             btnConfirmCompleted = itemView.findViewById(R.id.btnConfirmCompleted);
+            btnDetail = itemView.findViewById(R.id.btnDetail);
         }
 
         public void bind(final Order order, final OnItemClickListener listener, final Context context, int position) {
-            if (order == null) return;
+            if (order == null)
+                return;
 
-            // Build product summary name
-            String nameSummary = "Đơn hàng";
+            // NEW Logic: No index numbering, clean title formatting
+            String nameSummary = context.getString(R.string.order_prefix);
             if (order.getCartItems() != null && !order.getCartItems().isEmpty()) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(order.getCartItems().get(0).getProductName());
                 if (order.getCartItems().size() > 1) {
-                    sb.append(" và ").append(order.getCartItems().size() - 1).append(" món khác");
+                    sb.append(", +").append(order.getCartItems().size() - 1).append(" món khác");
                 }
                 nameSummary = sb.toString();
             }
-            
-            // Set Text: "Index. Product Name..."
-            tvOrderId.setText((position + 1) + ". " + nameSummary);
-            
+            tvOrderId.setText(nameSummary);
+
             // Set Date
             tvOrderDate.setText(order.getFormattedDate());
 
@@ -103,52 +108,65 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             tvOrderTotal.setText(formatter.format(order.getTotalAmount()));
 
             String statusRaw = order.getStatus();
-            String displayStatus = statusRaw; 
+            String displayStatus = statusRaw;
             int colorCode = Color.GRAY;
-            
+
             // Reset visibility
             btnCancel.setVisibility(View.GONE);
             btnConfirmCompleted.setVisibility(View.GONE);
-            btnReorder.setVisibility(View.VISIBLE); // Mua lại luôn hiện
+            btnReorder.setVisibility(View.GONE);
+            btnDetail.setVisibility(View.GONE);
 
             if (statusRaw != null) {
                 switch (statusRaw) {
                     case "Pending":
                     case "Đang xử lý":
-                        displayStatus = "⏳ Đang xử lý";
-                        colorCode = Color.parseColor("#FFA500"); // Orange
+                        displayStatus = "Đang xử lý";
+                        tvOrderStatus.setChipStrokeColorResource(R.color.status_pending);
+                        tvOrderStatus.setTextColor(context.getColor(R.color.status_pending));
+                        btnCancel.setText(R.string.cancel_label);
                         btnCancel.setVisibility(View.VISIBLE);
+                        btnConfirmCompleted.setText(R.string.confirm_label);
                         btnConfirmCompleted.setVisibility(View.VISIBLE);
                         break;
                     case "Shipping":
                     case "Đang giao":
-                        displayStatus = "🛵 Đang giao hàng";
-                        colorCode = Color.parseColor("#2196F3"); // Blue
-                        btnConfirmCompleted.setVisibility(View.VISIBLE); 
+                        displayStatus = "Đang giao";
+                        tvOrderStatus.setChipStrokeColorResource(R.color.status_processing);
+                        tvOrderStatus.setTextColor(context.getColor(R.color.status_processing));
+                        btnConfirmCompleted.setVisibility(View.VISIBLE);
+                        btnDetail.setVisibility(View.VISIBLE);
                         break;
                     case "Completed":
                     case "Hoàn thành":
-                        displayStatus = "✅ Đã hoàn thành";
-                        colorCode = Color.parseColor("#4CAF50"); // Green
+                        displayStatus = "Đã hoàn thành";
+                        tvOrderStatus.setChipStrokeColorResource(R.color.status_completed);
+                        tvOrderStatus.setTextColor(context.getColor(R.color.status_completed));
+                        btnReorder.setVisibility(View.VISIBLE);
+                        btnDetail.setVisibility(View.VISIBLE);
                         break;
                     case "Cancelled":
                     case "Đã hủy":
-                        displayStatus = "❌ Đã hủy";
-                        colorCode = Color.parseColor("#F44336"); // Red
+                        displayStatus = "Đã hủy";
+                        tvOrderStatus.setChipStrokeColorResource(R.color.status_cancelled);
+                        tvOrderStatus.setTextColor(context.getColor(R.color.status_cancelled));
+                        btnReorder.setVisibility(View.VISIBLE);
+                        btnDetail.setVisibility(View.VISIBLE);
                         break;
                     default:
-                         break;
+                        displayStatus = statusRaw;
+                        btnDetail.setVisibility(View.VISIBLE);
+                        break;
                 }
             }
             tvOrderStatus.setText(displayStatus);
-            tvOrderStatus.setTextColor(colorCode);
-            
+
             // --- CẬP NHẬT LOGIC HIỂN THỊ ẢNH ---
             int placeholderResId = R.drawable.ic_coffee_placeholder; // Default
 
             if (order.getCartItems() != null && !order.getCartItems().isEmpty()) {
                 CartItem firstItem = order.getCartItems().get(0);
-                
+
                 // Determine placeholder based on category
                 if (firstItem.getCategory() != null) {
                     String catLower = firstItem.getCategory().toLowerCase();
@@ -173,10 +191,10 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
                 if (imageSource != null) {
                     Glide.with(context)
-                         .load(imageSource)
-                         .placeholder(placeholderResId)
-                         .error(placeholderResId)
-                         .into(ivProductThumbnail);
+                            .load(imageSource)
+                            .placeholder(placeholderResId)
+                            .error(placeholderResId)
+                            .into(ivProductThumbnail);
                 } else {
                     ivProductThumbnail.setImageResource(placeholderResId);
                 }
@@ -186,6 +204,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             // -------------------------------------
 
             itemView.setOnClickListener(v -> listener.onItemClick(order));
+            btnDetail.setOnClickListener(v -> listener.onItemClick(order));
             btnCancel.setOnClickListener(v -> listener.onCancelOrder(order));
             btnReorder.setOnClickListener(v -> listener.onReorder(order));
             btnConfirmCompleted.setOnClickListener(v -> listener.onConfirmCompleted(order));

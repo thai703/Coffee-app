@@ -37,7 +37,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.messageList = messageList;
         this.localUserId = localUserId;
     }
-    
+
     public MessageAdapter(List<Message> messageList) {
         this.messageList = messageList;
         this.localUserId = "local_user";
@@ -46,7 +46,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
-        if (message.isProduct()) {
+        if (message.isProductMessage()) {
             return TYPE_PRODUCT;
         }
         return TYPE_TEXT;
@@ -72,11 +72,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof ProductMessageViewHolder) {
             ProductMessageViewHolder productHolder = (ProductMessageViewHolder) holder;
             Product product = message.getProduct();
-            
+
             if (product != null) {
                 productHolder.tvProductName.setText(product.getName());
                 productHolder.tvProductPrice.setText(String.format("%,.0f VND", product.getPrice()));
-                
+
                 // Load ảnh ưu tiên resource ID trước, sau đó đến URL
                 Object imageSource;
                 if (product.getImageResId() != 0) {
@@ -90,7 +90,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         .placeholder(R.drawable.ic_coffee)
                         .error(R.drawable.ic_coffee)
                         .into(productHolder.ivProductImage);
-                        
+
                 productHolder.btnAddToCart.setOnClickListener(v -> {
                     addToCart(product);
                 });
@@ -111,10 +111,11 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             textHolder.messageTextView.setLayoutParams(params);
         }
     }
-    
+
     private void addToCart(Product product) {
         // Tạo ID cho CartItem, ưu tiên ID thật của sản phẩm
-        String productId = (product.getId() != null && !product.getId().isEmpty()) ? product.getId() : product.getName();
+        String productId = (product.getId() != null && !product.getId().isEmpty()) ? product.getId()
+                : product.getName();
 
         CartItem cartItem = new CartItem(
                 productId,
@@ -125,16 +126,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 "100%",
                 "100%",
                 null,
-                null
-        );
-        
+                null);
+
         // Xử lý ảnh cho CartItem
         if (product.getImageResId() != 0) {
-             cartItem.setImageResId(product.getImageResId());
+            cartItem.setImageResId(product.getImageResId());
         } else if (product.getImageUrl() != null) {
-             cartItem.setImageUrl(product.getImageUrl());
+            cartItem.setImageUrl(product.getImageUrl());
         } else {
-             cartItem.setImageResId(R.drawable.ic_coffee); // Ảnh mặc định
+            cartItem.setImageResId(R.drawable.ic_coffee); // Ảnh mặc định
         }
 
         // Set category nếu có
@@ -146,7 +146,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         CartManager.getInstance().addToCart(cartItem);
         Toast.makeText(context, "Đã thêm " + product.getName() + " vào giỏ hàng!", Toast.LENGTH_SHORT).show();
-        
+
         // Chuyển sang màn hình Giỏ hàng
         Intent intent = new Intent(context, CartActivity.class);
         context.startActivity(intent);
@@ -159,12 +159,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageTextView;
+
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);
             messageTextView = itemView.findViewById(R.id.messageTextView);
         }
     }
-    
+
     public static class ProductMessageViewHolder extends RecyclerView.ViewHolder {
         ImageView ivProductImage;
         TextView tvProductName;

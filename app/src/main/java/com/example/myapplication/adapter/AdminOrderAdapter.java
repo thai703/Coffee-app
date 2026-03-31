@@ -29,6 +29,7 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Ad
 
     public interface OnOrderActionListener {
         void onConfirmOrder(Order order);
+
         void onCancelOrder(Order order);
     }
 
@@ -53,27 +54,30 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Ad
     @Override
     public void onBindViewHolder(@NonNull AdminOrderViewHolder holder, int position) {
         Order order = orderList.get(position);
-        if (order == null) return;
+        if (order == null)
+            return;
 
-        holder.tvOrderId.setText("Mã đơn: #" + (order.getOrderId() != null && order.getOrderId().length() > 6 ? order.getOrderId().substring(order.getOrderId().length() - 6) : order.getOrderId()));
+        holder.tvOrderId.setText("Mã đơn: #" + (order.getOrderId() != null && order.getOrderId().length() > 6
+                ? order.getOrderId().substring(order.getOrderId().length() - 6)
+                : order.getOrderId()));
         holder.tvOrderStatus.setText(order.getStatus());
         holder.tvOrderDate.setText("Ngày đặt: " + order.getFormattedDate());
         holder.tvCustomerName.setText("Khách: " + order.getCustomerName());
-        holder.tvCustomerPhone.setText("SĐT: " + order.getPhoneNumber());
+        holder.tvCustomerPhone.setText("Số điện thoại: " + order.getPhoneNumber());
         holder.tvCustomerAddress.setText("Địa chỉ: " + order.getShippingAddress());
-        
+
         // --- HIỂN THỊ CHI TIẾT MÓN ĂN ---
         StringBuilder itemsBuilder = new StringBuilder();
         if (order.getCartItems() != null) {
             for (CartItem item : order.getCartItems()) {
                 itemsBuilder.append("- ").append(item.getQuantity()).append("x ")
-                            .append(item.getProductName() != null ? item.getProductName() : item.getName())
-                            .append("\n");
+                        .append(item.getProductName() != null ? item.getProductName() : item.getName())
+                        .append("\n");
             }
         }
         holder.tvOrderItems.setText(itemsBuilder.toString().trim());
         // ----------------------------------
-        
+
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         holder.tvOrderTotal.setText("Tổng tiền: " + currencyFormat.format(order.getTotalAmount()));
 
@@ -93,11 +97,13 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Ad
         }
 
         holder.btnConfirm.setOnClickListener(v -> {
-            if (listener != null) listener.onConfirmOrder(order);
+            if (listener != null)
+                listener.onConfirmOrder(order);
         });
 
         holder.btnCancel.setOnClickListener(v -> {
-            if (listener != null) listener.onCancelOrder(order);
+            if (listener != null)
+                listener.onCancelOrder(order);
         });
 
         // Click vào item để xem chi tiết
@@ -115,7 +121,8 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<AdminOrderAdapter.Ad
     }
 
     public static class AdminOrderViewHolder extends RecyclerView.ViewHolder {
-        TextView tvOrderId, tvOrderStatus, tvOrderDate, tvCustomerName, tvCustomerPhone, tvCustomerAddress, tvOrderTotal;
+        TextView tvOrderId, tvOrderStatus, tvOrderDate, tvCustomerName, tvCustomerPhone, tvCustomerAddress,
+                tvOrderTotal;
         TextView tvOrderItems; // Mới thêm
         Button btnConfirm, btnCancel;
         View layoutActionButtons;

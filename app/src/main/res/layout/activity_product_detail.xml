@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cream_bg">
@@ -70,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Mô tả"
+                android:text="@string/description_label"
                 android:textStyle="bold"
                 android:textColor="@color/brown_700"/>
 
@@ -88,7 +89,7 @@
              <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chọn Size"
+                android:text="@string/choose_size"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"/>
             <com.google.android.material.chip.ChipGroup
@@ -100,7 +101,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chọn Đường"
+                android:text="@string/choose_sugar"
                 android:textStyle="bold"
                 android:layout_marginTop="12dp"/>
             <com.google.android.material.chip.ChipGroup
@@ -112,7 +113,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chọn Đá"
+                android:text="@string/choose_ice"
                 android:textStyle="bold"
                 android:layout_marginTop="12dp"/>
             <com.google.android.material.chip.ChipGroup
@@ -124,14 +125,68 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Topping thêm"
+                android:text="@string/extra_toppings"
                 android:textStyle="bold"
-                android:layout_marginTop="12dp"/>
+                android:layout_marginTop="12dp"
+                android:visibility="gone"/>
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chip_group_toppings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:singleSelection="false"/>
+                app:singleSelection="false"
+                android:visibility="gone"/>
+
+            <!-- Ratings Section -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/customer_reviews"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/brown_700"/>
+
+                <TextView
+                    android:id="@+id/tv_avg_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0 ★"
+                    android:textColor="#FFC107"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ratings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_rating"
+                tools:itemCount="2"/>
+
+            <TextView
+                android:id="@+id/tv_no_ratings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_reviews_yet"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:textColor="#9E9E9E"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"
@@ -191,7 +246,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:paddingVertical="12dp"
-            android:text="Thêm vào giỏ"
+            android:text="@string/add_to_cart"
             android:backgroundTint="@color/brown_700"
             app:cornerRadius="8dp"
             android:textSize="16sp"

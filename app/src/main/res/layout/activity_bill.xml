@@ -186,7 +186,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="\nQuý khách vui lòng kiểm tra lại hóa đơn trước khi thanh toán.\nXin cảm ơn quý khách!\nHẹn gặp lại quý khách lần sau."
+                android:text="\nQuý khách vui lòng kiểm tra lại hóa đơn trước khi xác nhận thanh toán.\nXin cảm ơn quý khách!\nHẹn gặp lại quý khách lần sau."
                 android:textAlignment="center"
                 android:textSize="13sp"
                 android:textColor="#000000"

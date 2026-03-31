@@ -28,10 +28,12 @@
 
         <ImageView
             android:id="@+id/iv_favorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:padding="5dp"
+            android:background="@drawable/bg_favorite_circle"
             android:src="@drawable/favorite_icon_selector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

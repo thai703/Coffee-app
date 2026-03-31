@@ -1,32 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp">
 
-    <EditText
-        android:id="@+id/etAddressName"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên gợi nhớ (VD: Nhà riêng)"
-        android:inputType="textCapWords" />
+        android:text="Địa chỉ mới"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/brown_900"
+        android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/etAddressPhone"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Số điện thoại người nhận"
-        android:inputType="phone" />
+        android:hint="Tên gợi nhớ"
+        app:boxStrokeColor="@color/premium_accent"
+        app:hintTextColor="@color/premium_accent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/etAddressFull"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAddressName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Địa chỉ chi tiết (Số nhà, đường, phường...)"
-        android:inputType="textPostalAddress"
-        android:minLines="2" />
+        android:layout_marginTop="12dp"
+        android:hint="Số điện thoại"
+        app:boxStrokeColor="@color/premium_accent"
+        app:hintTextColor="@color/premium_accent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAddressPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Địa chỉ chi tiết (Số nhà, đường...)"
+        app:boxStrokeColor="@color/premium_accent"
+        app:hintTextColor="@color/premium_accent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAddressFull"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:minLines="2" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

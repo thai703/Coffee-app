@@ -1,8 +1,0 @@
-<!-- res/drawable/tab_line_indicator.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <size
-        android:width="20dp"
-        android:height="2dp" />
-    <solid android:color="#090808" />
-</shape>

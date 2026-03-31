@@ -3,16 +3,23 @@ package com.example.myapplication.model;
 import java.io.Serializable;
 
 public class ProductGrid implements Serializable {
+    private String id;
     private String name;
     private String description;
     private double price;
     private int imageResId; // For local drawables
     private String imageUrl; // For remote URLs
     private String category;
+    private String categoryId; // Added for filtering
     private boolean isFavorite;
 
+    // Default constructor for Firebase
+    public ProductGrid() {
+    }
+
     // Constructor for local images
-    public ProductGrid(String name, String description, double price, int imageResId, String category) {
+    public ProductGrid(String id, String name, String description, double price, int imageResId, String category) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -22,7 +29,8 @@ public class ProductGrid implements Serializable {
     }
 
     // Constructor for remote images
-    public ProductGrid(String name, String description, double price, String imageUrl, String category) {
+    public ProductGrid(String id, String name, String description, double price, String imageUrl, String category) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
@@ -32,6 +40,14 @@ public class ProductGrid implements Serializable {
     }
 
     // --- Getters and Setters ---
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -79,6 +95,14 @@ public class ProductGrid implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public boolean isFavorite() {

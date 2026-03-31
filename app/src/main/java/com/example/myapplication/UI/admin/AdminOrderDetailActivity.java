@@ -54,7 +54,8 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
             return;
         }
 
-        ordersRef = FirebaseDatabase.getInstance().getReference("orders").child(order.getUserId()).child(order.getOrderId());
+        ordersRef = FirebaseDatabase.getInstance().getReference("orders").child(order.getUserId())
+                .child(order.getOrderId());
 
         setupUI();
         populateOrderDetails();
@@ -71,9 +72,10 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
         } else {
             binding.adminPanel.setVisibility(View.GONE);
             binding.btnReorder.setVisibility(View.VISIBLE);
-            
+
             String status = order.getStatus();
-            if (status == null) status = "";
+            if (status == null)
+                status = "";
 
             // Cancel button logic: only "Đang xử lý" or "Pending"
             if ("Đang xử lý".equalsIgnoreCase(status) || "Pending".equalsIgnoreCase(status)) {
@@ -82,10 +84,11 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
                 binding.btnCancelOrder.setVisibility(View.GONE);
             }
 
-            // Complete button logic: Show for "Đang giao", "Shipping" AND "Đang xử lý", "Pending"
+            // Complete button logic: Show for "Đang giao", "Shipping" AND "Đang xử lý",
+            // "Pending"
             // to match the list adapter logic and ensure it shows up during testing.
             if ("Đang giao".equalsIgnoreCase(status) || "Shipping".equalsIgnoreCase(status) ||
-                "Đang xử lý".equalsIgnoreCase(status) || "Pending".equalsIgnoreCase(status)) {
+                    "Đang xử lý".equalsIgnoreCase(status) || "Pending".equalsIgnoreCase(status)) {
                 binding.btnCompleteOrder.setVisibility(View.VISIBLE);
             } else {
                 binding.btnCompleteOrder.setVisibility(View.GONE);
@@ -95,7 +98,8 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
 
     private void setupUI() {
         List<String> statusOptions = new ArrayList<>(Arrays.asList("Đang xử lý", "Đang giao", "Hoàn thành", "Đã hủy"));
-        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statusOptions);
+        ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+                statusOptions);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinnerStatus.setAdapter(statusAdapter);
 
@@ -105,7 +109,8 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
         }
 
         binding.rvOrderItems.setLayoutManager(new LinearLayoutManager(this));
-        itemAdapter = new AdminOrderDetailItemAdapter(order.getCartItems() != null ? order.getCartItems() : new ArrayList<>());
+        itemAdapter = new AdminOrderDetailItemAdapter(
+                order.getCartItems() != null ? order.getCartItems() : new ArrayList<>());
         binding.rvOrderItems.setAdapter(itemAdapter);
     }
 
@@ -113,7 +118,8 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, HH:mm", new Locale("vi", "VN"));
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
-        binding.tvOrderId.setText("#" + order.getOrderId().substring(0, Math.min(6, order.getOrderId().length())).toUpperCase());
+        binding.tvOrderId
+                .setText("#" + order.getOrderId().substring(0, Math.min(6, order.getOrderId().length())).toUpperCase());
         binding.tvOrderDate.setText(order.getFormattedDate());
         binding.tvCustomerName.setText(order.getCustomerName());
         binding.tvCustomerPhone.setText(order.getPhoneNumber());
@@ -132,7 +138,7 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
         binding.btnReorder.setOnClickListener(v -> reorderItems());
 
         binding.btnCancelOrder.setOnClickListener(v -> showCancelConfirmationDialog());
-        
+
         binding.btnCompleteOrder.setOnClickListener(v -> showCompleteConfirmationDialog());
     }
 
@@ -159,13 +165,15 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
         ordersRef.child("status").setValue("Đã hủy")
                 .addOnSuccessListener(aVoid -> {
                     setLoading(false);
-                    Toast.makeText(AdminOrderDetailActivity.this, "Đơn hàng đã được hủy thành công!", Toast.LENGTH_SHORT).show();
-                    order.setStatus("Đã hủy"); 
+                    Toast.makeText(AdminOrderDetailActivity.this, "Đơn hàng đã được hủy thành công!",
+                            Toast.LENGTH_SHORT).show();
+                    order.setStatus("Đã hủy");
                     updateUiForRole();
                 })
                 .addOnFailureListener(e -> {
                     setLoading(false);
-                    Toast.makeText(AdminOrderDetailActivity.this, "Hủy đơn hàng thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminOrderDetailActivity.this, "Hủy đơn hàng thất bại: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -175,7 +183,7 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
                 .addOnSuccessListener(aVoid -> {
                     setLoading(false);
                     Toast.makeText(AdminOrderDetailActivity.this, "Đơn hàng đã hoàn thành!", Toast.LENGTH_SHORT).show();
-                    order.setStatus("Hoàn thành"); 
+                    order.setStatus("Hoàn thành");
                     updateUiForRole();
                 })
                 .addOnFailureListener(e -> {
@@ -215,12 +223,14 @@ public class AdminOrderDetailActivity extends AppCompatActivity {
         ordersRef.child("status").setValue(newStatus)
                 .addOnSuccessListener(aVoid -> {
                     setLoading(false);
-                    Toast.makeText(AdminOrderDetailActivity.this, "Cập nhật trạng thái thành công!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminOrderDetailActivity.this, "Cập nhật trạng thái thành công!", Toast.LENGTH_SHORT)
+                            .show();
                     order.setStatus(newStatus);
                 })
                 .addOnFailureListener(e -> {
                     setLoading(false);
-                    Toast.makeText(AdminOrderDetailActivity.this, "Cập nhật thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminOrderDetailActivity.this, "Cập nhật thất bại: " + e.getMessage(),
+                            Toast.LENGTH_SHORT).show();
                 });
     }
 

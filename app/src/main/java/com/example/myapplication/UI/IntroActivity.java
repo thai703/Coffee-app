@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.UI.Login.LoginActivity;
 
+import com.example.myapplication.manager.LanguageHelper;
+
 public class IntroActivity extends AppCompatActivity {
 
     private ImageView imageView;
@@ -23,6 +25,7 @@ public class IntroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LanguageHelper.loadLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
@@ -42,9 +45,9 @@ public class IntroActivity extends AppCompatActivity {
         scaleSet.start();
 
         // 2. Staggered Animation cho Text và Button (Hiện dần + Trượt lên)
-        animateView(tvWelcome, 300);   // Hiện nhanh hơn
-        animateView(tvSlogan, 500);    // Hiện nhanh hơn
-        animateView(btnExplore, 700);  // Hiện nhanh hơn
+        animateView(tvWelcome, 300); // Hiện nhanh hơn
+        animateView(tvSlogan, 500); // Hiện nhanh hơn
+        animateView(btnExplore, 700); // Hiện nhanh hơn
 
         // Sự kiện click
         btnExplore.setOnClickListener(new View.OnClickListener() {
@@ -62,12 +65,12 @@ public class IntroActivity extends AppCompatActivity {
     // Hàm tạo hiệu ứng Fade In + Slide Up
     private void animateView(View view, long delay) {
         view.setTranslationY(100f); // Đẩy xuống 100 đơn vị
-        view.setAlpha(0f);          // Ẩn hoàn toàn
+        view.setAlpha(0f); // Ẩn hoàn toàn
 
         view.animate()
-                .translationY(0f)   // Trượt về vị trí cũ
-                .alpha(1f)          // Hiện rõ dần
-                .setDuration(600)   // Thời gian hiệu ứng ngắn lại chút
+                .translationY(0f) // Trượt về vị trí cũ
+                .alpha(1f) // Hiện rõ dần
+                .setDuration(600) // Thời gian hiệu ứng ngắn lại chút
                 .setStartDelay(delay) // Thời gian chờ
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .start();

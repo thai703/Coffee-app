@@ -28,6 +28,12 @@ android {
 
         val geminiKey = properties.getProperty("GEMINI_API_KEY") ?: ""
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiKey\"")
+        
+        // VNPay Configuration
+        buildConfigField("String", "VNPAY_TMN_CODE", "\"CV5WFU73\"")
+        buildConfigField("String", "VNPAY_HASH_SECRET", "\"LTXIDZ5TJLPQB8Y8NY20I7GHKAR0VEDG\"")
+        buildConfigField("String", "VNPAY_PAYMENT_URL", "\"https://sandbox.vnpayment.vn/paymentv2/vpcpay.html\"")
+        buildConfigField("String", "VNPAY_RETURN_URL", "\"coffeeapp://vnpay_return\"")
     }
 
     buildTypes {
@@ -109,13 +115,17 @@ dependencies {
     // --- 4. NETWORKING ---
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // --- 5. GOOGLE SERVICES & AI ---
     implementation("com.google.android.gms:play-services-auth:21.2.0")
     implementation("com.google.android.gms:play-services-base:18.5.0")
-    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 
-    // --- 6. TESTING ---
+    
+    // --- 6. PAYMENT (VNPay) ---
+    implementation("commons-codec:commons-codec:1.15")
+
+    // --- 7. TESTING ---
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")

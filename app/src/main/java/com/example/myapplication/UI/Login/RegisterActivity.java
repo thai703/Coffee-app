@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.R;
 import com.example.myapplication.UI.Home.HomeActivity;
+import com.example.myapplication.manager.LanguageHelper;
 import com.example.myapplication.databinding.ActivityRegisterBinding;
 import com.example.myapplication.model.User;
 import com.example.myapplication.util.SessionManager;
@@ -29,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LanguageHelper.loadLocale(this);
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -74,7 +77,8 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     } else {
                         setLoading(false);
-                        Toast.makeText(RegisterActivity.this, "Đăng ký thất bại: " + task.getException().getMessage(),
+                        Toast.makeText(RegisterActivity.this,
+                                getString(R.string.status_register_failed) + task.getException().getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
                 });
@@ -102,11 +106,12 @@ public class RegisterActivity extends AppCompatActivity {
 
         mDatabase.child("users").child(userId).setValue(user).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(RegisterActivity.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, getString(R.string.status_register_success), Toast.LENGTH_SHORT)
+                        .show();
                 navigateToHome();
             } else {
                 setLoading(false);
-                Toast.makeText(RegisterActivity.this, "Lỗi khi lưu thông tin người dùng.",
+                Toast.makeText(RegisterActivity.this, getString(R.string.status_db_error),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -114,32 +119,32 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean validateInput(String fullName, String email, String password, String confirmPassword) {
         if (TextUtils.isEmpty(fullName)) {
-            binding.etFullName.setError("Họ và tên không được để trống.");
+            binding.etFullName.setError(getString(R.string.err_empty_fullname));
             binding.etFullName.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(email)) {
-            binding.etRegisterEmail.setError("Email không được để trống.");
+            binding.etRegisterEmail.setError(getString(R.string.err_empty_email));
             binding.etRegisterEmail.requestFocus();
             return false;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.etRegisterEmail.setError("Vui lòng nhập email hợp lệ.");
+            binding.etRegisterEmail.setError(getString(R.string.err_invalid_email_format));
             binding.etRegisterEmail.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(password)) {
-            binding.etRegisterPassword.setError("Mật khẩu không được để trống.");
+            binding.etRegisterPassword.setError(getString(R.string.err_empty_password));
             binding.etRegisterPassword.requestFocus();
             return false;
         }
         if (password.length() < 6) {
-            binding.etRegisterPassword.setError("Mật khẩu phải có ít nhất 6 ký tự.");
+            binding.etRegisterPassword.setError(getString(R.string.err_password_short));
             binding.etRegisterPassword.requestFocus();
             return false;
         }
         if (!password.equals(confirmPassword)) {
-            binding.etConfirmPassword.setError("Mật khẩu không khớp.");
+            binding.etConfirmPassword.setError(getString(R.string.err_password_mismatch));
             binding.etConfirmPassword.requestFocus();
             return false;
         }

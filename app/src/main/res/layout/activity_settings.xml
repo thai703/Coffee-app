@@ -5,26 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FDF8F2"
+    android:background="@color/premium_bg"
     tools:context=".UI.settings.SettingsActivity">
 
-    <!-- Toolbar -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- AppBar -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
-        app:navigationIcon="@drawable/ic_back">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Cài đặt"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@color/coffee_brown" />
-    </androidx.appcompat.widget.Toolbar>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@string/settings_title"
+            app:titleTextColor="@color/brown_900" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,134 +38,201 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tài khoản"
-                android:textSize="16sp"
+                android:text="@string/account_section"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/coffee_brown"/>
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="12dp"
+                android:textColor="@color/brown_900"/>
 
-            <TextView
-                android:id="@+id/tv_edit_profile"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chỉnh sửa thông tin"
-                android:padding="12dp"
-                android:background="@drawable/bg_white_rounded"
-                android:drawableEnd="@drawable/ic_arrow_right"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
 
-            <TextView
-                android:id="@+id/tv_change_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Đổi mật khẩu"
-                android:padding="12dp"
-                android:background="@drawable/bg_white_rounded"
-                android:drawableEnd="@drawable/ic_arrow_right"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginBottom="24dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_edit_profile"
+                        style="@style/PremiumProfileItem"
+                        android:text="@string/edit_profile"
+                        app:drawableStartCompat="@drawable/ic_person" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/gray_200" />
+
+                    <TextView
+                        android:id="@+id/tv_change_password"
+                        style="@style/PremiumProfileItem"
+                        android:text="@string/change_password"
+                        app:drawableStartCompat="@drawable/ic_lock" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- General Settings -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chung"
-                android:textSize="16sp"
+                android:text="@string/utilities_section"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/coffee_brown"/>
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="12dp"
+                android:textColor="@color/brown_900"/>
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/bg_white_rounded"
-                android:padding="12dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="8dp">
-                
-                <TextView
-                    android:layout_width="0dp"
+                android:layout_marginBottom="24dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Thông báo" />
-                
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_notification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"/>
-            </LinearLayout>
-            
-            <TextView
-                android:id="@+id/tv_language"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ngôn ngữ"
-                android:padding="12dp"
-                android:background="@drawable/bg_white_rounded"
-                android:drawableEnd="@drawable/ic_arrow_right"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginBottom="24dp"/>
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+                        
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_info"
+                            app:tint="@color/premium_accent" />
+                        
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="24dp"
+                            android:text="@string/notifications"
+                            android:textColor="@color/brown_900"
+                            android:textSize="15sp" />
+                        
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/switch_notification"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            app:thumbTint="@color/premium_accent"
+                            app:trackTint="@color/premium_accent_light"/>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/gray_200" />
+                    
+                    <TextView
+                        android:id="@+id/tv_language"
+                        style="@style/PremiumProfileItem"
+                        android:text="@string/system_language"
+                        app:drawableStartCompat="@drawable/ic_language" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Support -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hỗ trợ"
+                android:text="@string/support_section"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="12dp"
+                android:textColor="@color/brown_900"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_help_center"
+                        style="@style/PremiumProfileItem"
+                        android:text="@string/help_center"
+                        app:drawableStartCompat="@android:drawable/ic_menu_help" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/gray_200" />
+
+                    <TextView
+                        android:id="@+id/tv_privacy_policy"
+                        style="@style/PremiumProfileItem"
+                        android:text="@string/privacy_policy"
+                        app:drawableStartCompat="@android:drawable/ic_menu_info_details" />
+                        
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/gray_200" />
+
+                    <TextView
+                        android:id="@+id/tv_about_us"
+                        style="@style/PremiumProfileItem"
+                        android:text="@string/about_aura"
+                        app:drawableStartCompat="@drawable/ic_info" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Logout Button (Unified design) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logout"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="32dp"
+                android:text="@string/logout"
+                android:textColor="@color/danger"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:textColor="@color/coffee_brown"/>
-
-            <TextView
-                android:id="@+id/tv_help_center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Trung tâm trợ giúp"
-                android:padding="12dp"
-                android:background="@drawable/bg_white_rounded"
-                android:drawableEnd="@drawable/ic_arrow_right"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_privacy_policy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Chính sách bảo mật"
-                android:padding="12dp"
-                android:background="@drawable/bg_white_rounded"
-                android:drawableEnd="@drawable/ic_arrow_right"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginBottom="8dp"/>
-                
-            <TextView
-                android:id="@+id/tv_about_us"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Về chúng tôi"
-                android:padding="12dp"
-                android:background="@drawable/bg_white_rounded"
-                android:drawableEnd="@drawable/ic_arrow_right"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginBottom="24dp"/>
-
-            <Button
-                android:id="@+id/btn_logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Đăng xuất"
-                android:backgroundTint="#FF4444"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"/>
+                app:strokeColor="@color/danger"
+                app:strokeWidth="1.5dp"
+                app:cornerRadius="28dp"
+                app:icon="@drawable/ic_logout"
+                app:iconTint="@color/danger"
+                app:iconGravity="textStart"
+                app:iconPadding="12dp" />
 
         </LinearLayout>
     </ScrollView>

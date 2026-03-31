@@ -1,8 +1,6 @@
 package com.example.myapplication.UI.support;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -12,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.adapter.MessageAdapter;
 import com.example.myapplication.model.Message;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +38,29 @@ public class SupportActivity extends AppCompatActivity {
     private MessageAdapter adapter;
     private List<Message> messages;
 
-    // Sửa lại ID để tường minh hơn
-    private final String userId = "support_user"; 
-    private final String adminId = "support_admin";
+    // Firebase
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
+    private String currentUserId;
+    private final String ADMIN_ID = "admin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support);
+
+        // Init Firebase
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null) {
+            currentUserId = mAuth.getCurrentUser().getUid();
+        } else {
+            // Fallback or finish if not logged in
+            Toast.makeText(this, "Vui lòng đăng nhập để sử dụng hỗ trợ", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("chats").child(currentUserId);
 
         // Init View
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -55,7 +75,7 @@ public class SupportActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
                 TextView toolbarTitle = findViewById(R.id.toolbarTitle);
                 if (toolbarTitle != null) {
-                    toolbarTitle.setText("Hỗ trợ Khách hàng");
+                    toolbarTitle.setText(getString(R.string.support_header));
                 }
             }
         }
@@ -64,11 +84,8 @@ public class SupportActivity extends AppCompatActivity {
             btnBack.setOnClickListener(v -> onBackPressed());
         }
 
-        messages = new ArrayList<>();
-        // SỬA LỖI: Sử dụng constructor mới của MessageAdapter
-        adapter = new MessageAdapter(messages, userId);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        setupRecyclerView();
+        loadMessages();
 
         buttonSend.setOnClickListener(v -> {
             String msg = editText.getText().toString().trim();
@@ -77,31 +94,58 @@ public class SupportActivity extends AppCompatActivity {
                 editText.setText("");
             }
         });
-        
-        addBotWelcomeMessage();
     }
 
-    private void addBotWelcomeMessage() {
-        // SỬA LỖI: Sử dụng constructor đầy đủ của Message
-        Message welcomeMsg = new Message(adminId, userId, "Chào bạn, tôi có thể giúp gì cho bạn?", System.currentTimeMillis());
-        messages.add(welcomeMsg);
-        adapter.notifyItemInserted(messages.size() - 1);
+    private void setupRecyclerView() {
+        messages = new ArrayList<>();
+        adapter = new MessageAdapter(messages, currentUserId);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void loadMessages() {
+        // Lắng nghe tin nhắn mới
+        mDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Message message = snapshot.getValue(Message.class);
+                if (message != null) {
+                    messages.add(message);
+                    adapter.notifyItemInserted(messages.size() - 1);
+                    recyclerView.scrollToPosition(messages.size() - 1);
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(SupportActivity.this, "Lỗi tải tin nhắn: " + error.getMessage(), Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
     }
 
     private void sendMessage(String content) {
-        // SỬA LỖI: Sử dụng constructor đầy đủ của Message
-        Message userMessage = new Message(userId, adminId, content, System.currentTimeMillis());
-        messages.add(userMessage);
-        adapter.notifyItemInserted(messages.size() - 1);
-        recyclerView.scrollToPosition(messages.size() - 1);
+        String messageId = mDatabase.push().getKey();
+        if (messageId == null)
+            return;
 
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            // SỬA LỖI: Sử dụng constructor đầy đủ của Message
-            Message botResponse = new Message(adminId, userId, "Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.", System.currentTimeMillis());
-            messages.add(botResponse);
-            adapter.notifyItemInserted(messages.size() - 1);
-            recyclerView.scrollToPosition(messages.size() - 1);
-        }, 1000); 
+        Message message = new Message(currentUserId, ADMIN_ID, content, System.currentTimeMillis());
+
+        mDatabase.child(messageId).setValue(message)
+                .addOnFailureListener(
+                        e -> Toast.makeText(SupportActivity.this, "Gửi tin thất bại", Toast.LENGTH_SHORT).show());
     }
 
     @Override

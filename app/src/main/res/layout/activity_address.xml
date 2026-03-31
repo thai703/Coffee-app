@@ -3,35 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@color/premium_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Custom AppBar -->
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:elevation="0dp">
+            
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="#6D4C41"
+                app:navigationIcon="@drawable/ic_back"
                 app:title="Sổ địa chỉ"
-                app:titleTextColor="@android:color/white"
-                app:navigationIcon="@drawable/ic_arrow_back"/>
+                app:titleTextColor="@color/brown_900"/>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAddresses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"
+            android:padding="16dp"
             android:clipToPadding="false"/>
     </LinearLayout>
     
+    <!-- Empty State -->
     <LinearLayout
         android:id="@+id/layoutEmptyAddress"
         android:layout_width="wrap_content"
@@ -42,27 +45,39 @@
         android:visibility="gone">
         
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_address_book"
-            app:tint="#BDBDBD"/>
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_location"
+            app:tint="@color/gray_300"/>
+            
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chưa có địa chỉ nào"
             android:layout_marginTop="16dp"
-            android:textColor="#757575"/>
+            android:textSize="16sp"
+            android:textColor="@color/gray_500"/>
+            
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thêm địa chỉ để đặt hàng nhanh hơn"
+            android:layout_marginTop="8dp"
+            android:textSize="14sp"
+            android:textColor="@color/gray_400"/>
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabAddAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add" 
-        app:tint="@android:color/white"
-        app:backgroundTint="#6D4C41"
+        android:layout_margin="24dp"
+        android:text="Thêm mới"
+        android:textColor="@color/white"
+        app:icon="@drawable/ic_add"
+        app:iconTint="@color/white"
+        app:backgroundTint="@color/premium_accent"
         android:contentDescription="Thêm địa chỉ"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

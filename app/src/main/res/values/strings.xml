@@ -3,6 +3,9 @@
     <string name="app_name">Aura Cafe</string>
     <string name="app_name_branded">☕ Aura Cafe ☕</string>
     <string name="quantity_display">x%d</string>
+    <string name="intro_discover">Khám Phá</string>
+    <string name="intro_welcome_slogan">Chào mừng bạn đã đến với Aura Cafe</string>
+    <string name="intro_experience_now">Trải Nghiệm Ngay</string>
     <string name="category_name_hint">Nhập tên danh mục</string>
     <string name="add_category_button">Thêm danh mục</string>
     <string name="update_category_button">Cập nhật danh mục</string>
@@ -16,10 +19,262 @@
     <string name="action_more">Tùy chọn thêm</string>
     <string name="action_notification">Thông báo</string>
     <string name="action_favorite">Yêu thích</string>
-    <string name="search_hint">Tìm kiếm sản phẩm...</string>
+    <string name="search_hint">Tìm kiếm đồ uống yêu thích...</string>
     <string name="category_title">Danh mục</string>
     <string name="popular_title">Phổ biến</string>
     <string name="view_all">Xem tất cả</string>
     <string name="cart_description">Giỏ hàng</string>
     <string name="chatbot_description">Chatbot AI</string>
+    <string name="welcome_greeting">Xin chào!</string>
+    <string name="ai_recommend_tooltip">Gợi ý món ngon</string>
+
+    <!-- Login & Register -->
+    <string name="login_subtitle">Đăng nhập để khám phá thế giới cà phê</string>
+    <string name="login_button">Đăng nhập</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="or_divider">Hoặc</string>
+    <string name="continue_with_google">Tiếp tục với Google</string>
+    <string name="no_account_prompt">Chưa có tài khoản?</string>
+    <string name="register_now">Đăng ký ngay</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Mật khẩu</string>
+    <string name="full_name_hint">Họ và tên</string>
+    <string name="phone_hint">Số điện thoại</string>
+    <string name="confirm_password_hint">Xác nhận mật khẩu</string>
+    <string name="register_title">Tạo tài khoản</string>
+    <string name="register_button">Đăng ký</string>
+    <string name="already_have_account">Đã có tài khoản?</string>
+
+    <!-- Product Detail -->
+    <string name="description_label">Mô tả</string>
+    <string name="choose_size">Chọn Size</string>
+    <string name="choose_sugar">Chọn Đường</string>
+    <string name="choose_ice">Chọn Đá</string>
+    <string name="extra_toppings">Topping thêm</string>
+    <string name="customer_reviews">Đánh giá từ khách hàng</string>
+    <string name="no_reviews_yet">Chưa có đánh giá nào cho sản phẩm này.</string>
+    <string name="add_to_cart">Thêm vào giỏ</string>
+
+    <!-- Cart & Checkout -->
+    <string name="cart_title">Giỏ hàng</string>
+    <string name="empty_cart_title">Giỏ hàng của bạn đang trống</string>
+    <string name="empty_cart_subtitle">Hãy bắt đầu mua sắm để lấp đầy giỏ hàng nhé!</string>
+    <string name="continue_shopping">Tiếp tục mua sắm</string>
+    <string name="subtotal_label">Tạm tính:</string>
+    <string name="shipping_fee_label">Phí giao hàng:</string>
+    <string name="total_label">Tổng tiền:</string>
+    <string name="confirm_purchase">Xác nhận mua hàng</string>
+    
+    <string name="checkout_title">Thanh toán</string>
+    <string name="shipping_address">Địa chỉ nhận hàng</string>
+    <string name="change_button">Thay đổi</string>
+    <string name="recipient_name">Tên người nhận</string>
+    <string name="delivery_address">Địa chỉ giao hàng</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="order_items">Danh sách món</string>
+    <string name="payment_method">Phương thức thanh toán</string>
+    <string name="pay_cash">Thanh toán tiền mặt</string>
+    <string name="momo_wallet">Ví MoMo</string>
+    <string name="vnpay_wallet">Ví VNPay</string>
+    <string name="vnpay_processing">Đang xử lý thanh toán VNPay...</string>
+    <string name="bank_transfer">Chuyển khoản ngân hàng (VCB)</string>
+    <string name="checkout_details">Chi tiết thanh toán</string>
+    <string name="total_items_price">Tổng tiền hàng</string>
+    <string name="total_payment">Tổng thanh toán</string>
+    <string name="confirm_order">Xác nhận đơn hàng</string>
+
+    <!-- Orders -->
+    <string name="order_history_title">Lịch sử đơn hàng</string>
+    <string name="no_orders_yet">Bạn chưa có đơn hàng nào</string>
+    <string name="no_notifications_yet">Chưa có thông báo nào</string>
+    <string name="no_orders_subtitle">Hãy bắt đầu mua sắm và tạo đơn hàng đầu tiên của bạn!</string>
+    <string name="start_ordering">Bắt đầu đặt hàng</string>
+    <string name="order_detail_title">Chi tiết đơn hàng</string>
+    <string name="customer_info">Thông tin khách hàng</string>
+    <string name="order_info">Thông tin đơn hàng</string>
+    <string name="order_id_prefix">"Mã đơn hàng: "</string>
+    <string name="order_date_prefix">"Ngày đặt: "</string>
+    <string name="products_label">Các sản phẩm</string>
+    <string name="cancel_order">Hủy đơn hàng</string>
+    <string name="label_name">"Tên: "</string>
+    <string name="label_phone">"Số điện thoại: "</string>
+    <string name="label_address">"Địa chỉ: "</string>
+    <string name="action_reorder">Đặt lại đơn hàng</string>
+
+    <string name="action_confirm_received">Đã nhận hàng</string>
+    
+    <!-- Profile Menu -->
+    <string name="my_orders">Lịch sử đơn hàng</string>
+    <string name="settings">Cài đặt</string>
+    
+    <string name="status_pending_icon">⏳ Đang xử lý</string>
+    <string name="status_shipping_icon">🛵 Đang giao hàng</string>
+    <string name="status_completed_icon">✅ Đã hoàn thành</string>
+    <string name="status_cancelled_icon">❌ Đã hủy</string>
+    <string name="order_prefix">Đơn hàng</string>
+    <string name="items_other">và %d món khác</string>
+    
+    <string name="msg_cancel_success">Đã hủy đơn hàng</string>
+    <string name="msg_confirm_success">Đã xác nhận hoàn thành</string>
+    <string name="msg_reorder_added">Đã thêm sản phẩm vào giỏ hàng!</string>
+    <string name="msg_no_item_reorder">Đơn hàng này không có sản phẩm để đặt lại.</string>
+    <string name="msg_login_reorder">Vui lòng đăng nhập để đặt lại đơn hàng.</string>
+    <string name="order_not_found">Không tìm thấy đơn hàng</string>
+    <!-- Settings & Profile -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="account_section">Tài khoản</string>
+    <string name="edit_profile">Chỉnh sửa thông tin</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="utilities_section">Tiện ích</string>
+    <string name="notifications">Thông báo ứng dụng</string>
+    <string name="system_language">Ngôn ngữ hệ thống</string>
+    <string name="support_section">Hỗ trợ</string>
+    <string name="help_center">Trung tâm trợ giúp</string>
+    <string name="privacy_policy">Chính sách bảo mật</string>
+    <string name="about_aura">Giới thiệu Aura Coffee</string>
+    <string name="logout_device">Đăng xuất khỏi thiết bị</string>
+
+    <!-- Profile Specific -->
+    <string name="my_profile_title">Hồ sơ của tôi</string>
+    <string name="order_history">Lịch sử đơn hàng</string>
+    <string name="address_book">Sổ địa chỉ</string>
+    <string name="logout">Đăng xuất</string>
+
+    <!-- Bottom Nav -->
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_menu">Thực đơn</string>
+    <string name="nav_support">Hỗ trợ</string>
+    <string name="nav_profile">Tài khoản</string>
+    <string name="cancel_label">Hủy</string>
+    <string name="reorder_label">Mua lại</string>
+    <string name="confirm_label">Xác nhận</string>
+    <string name="err_enter_email">Vui lòng nhập Email</string>
+    <string name="err_invalid_email">Email không hợp lệ</string>
+    <string name="err_enter_password">Vui lòng nhập mật khẩu</string>
+    <string name="err_incorrect_password">Mật khẩu không chính xác</string>
+    <string name="err_account_not_exist">Tài khoản không tồn tại!</string>
+    <string name="err_login_failed">Đăng nhập thất bại! Vui lòng thử lại.</string>
+    <string name="err_reenter">Vui lòng nhập lại</string>
+    <string name="err_empty_fullname">Họ và tên không được để trống.</string>
+    <string name="err_empty_email">Email không được để trống.</string>
+    <string name="err_invalid_email_format">Vui lòng nhập email hợp lệ.</string>
+    <string name="err_empty_password">Mật khẩu không được để trống.</string>
+    <string name="err_password_short">Mật khẩu phải có ít nhất 6 ký tự.</string>
+    <string name="err_password_mismatch">Mật khẩu không khớp.</string>
+    <string name="status_register_success">Đăng ký thành công!</string>
+    <string name="status_register_failed">Đăng ký thất bại: </string>
+    <string name="status_db_error">Lỗi khi lưu thông tin người dùng.</string>
+    <string name="tab_all">Tất cả</string>
+    <string name="tab_pending">Đang xử lý</string>
+    <string name="tab_completed">Hoàn thành</string>
+    <string name="status_order_success">Đơn hàng đã được tạo thành công!</string>
+    <string name="placeholder_no_name">Chưa có tên</string>
+    <string name="placeholder_no_phone">Chưa có SĐT</string>
+    <string name="placeholder_no_address">Chưa có địa chỉ</string>
+    <string name="err_load_user_info">Lỗi tải thông tin người dùng</string>
+    <string name="err_order_failed">Không thể đặt hàng. Vui lòng thử lại.</string>
+    <string name="status_pending">Đang xử lý</string>
+    <string name="status_completed">Hoàn thành</string>
+    <string name="status_cancelled">Đã hủy</string>
+    <string name="label_order_date">Ngày đặt</string>
+    <string name="msg_please_choose_size">Vui lòng chọn kích thước</string>
+    <string name="msg_add_to_cart_success">Thêm vào giỏ hàng thành công!</string>
+    <string name="msg_product_in_cart">Sản phẩm đã có trong giỏ hàng</string>
+    <string name="msg_add_to_cart_error">Lỗi khi thêm vào giỏ hàng</string>
+    <string name="msg_added_to_favorites">Đã thêm %s vào yêu thích!</string>
+    <string name="msg_invalid_price">Lỗi giá sản phẩm không hợp lệ.</string>
+    <string name="msg_added_to_cart">Đã thêm %s vào giỏ hàng</string>
+    <string name="msg_ai_analyzing">AI đang phân tích sở thích của bạn...</string>
+    <string name="edit_profile_title">Chỉnh sửa hồ sơ</string>
+    <string name="personal_info_label">Thông tin cá nhân</string>
+    <string name="address_hint">Địa chỉ</string>
+    <string name="save_changes">Lưu thay đổi</string>
+    <string name="role_label">Vai trò</string>
+    <string name="err_login_required">Bạn cần đăng nhập để thực hiện việc này.</string>
+    <string name="err_enter_fullname">Vui lòng nhập họ tên</string>
+    <string name="err_enter_phone">Vui lòng nhập số điện thoại</string>
+    <string name="status_update_success">Cập nhật hồ sơ thành công!</string>
+    <string name="status_update_failed">Lỗi cập nhật hồ sơ</string>
+    <string name="status_uploading">Đang tải ảnh...</string>
+    <string name="err_load_current_info">Không thể tải thông tin hiện tại.</string>
+    <string name="err_name_required">Tên không được để trống.</string>
+    <string name="err_upload_image_prefix">Lỗi tải ảnh: %s</string>
+    <string name="err_update_profile_prefix">Lỗi khi cập nhật: %s</string>
+    <string name="back_button_desc">Quay lại</string>
+    <string name="title_settings">Cài đặt</string>
+    <string name="msg_notification_status">Thông báo: %s</string>
+    <string name="status_on">Bật</string>
+    <string name="status_off">Tắt</string>
+    <string name="msg_help_center_developing">Trung tâm trợ giúp đang được phát triển</string>
+    <string name="dialog_privacy_title">Chính sách bảo mật</string>
+    <string name="dialog_privacy_content">Aura Coffee cam kết bảo mật tuyệt đối thông tin cá nhân của Quý khách. Chúng tôi chỉ sử dụng dữ liệu để xử lý đơn hàng và nâng cao chất lượng dịch vụ.</string>
+    <string name="dialog_about_title">Giới thiệu Aura Coffee</string>
+    <string name="dialog_about_content">Aura Coffee - Điểm đến cho những tín đồ yêu cà phê.\n\nTrải nghiệm hương vị cà phê thượng hạng trong không gian hiện đại và ấm cúng.\n\nPhiên bản: 1.0.0\nPhát triển bởi: JaThinh Team</string>
+    <string name="action_close">Đóng</string>
+    <string name="title_select_language">Chọn ngôn ngữ</string>
+    <string name="err_fill_all_fields">Vui lòng điền đầy đủ thông tin</string>
+    <string name="status_password_changed">Đổi mật khẩu thành công!</string>
+    <string name="err_password_update">Lỗi cập nhật mật khẩu</string>
+    <string name="err_incorrect_old_password">Mật khẩu cũ không chính xác</string>
+
+    
+    <!-- Support -->
+    <string name="support_header">Hỗ trợ khách hàng</string>
+    <string name="support_intro">Chào bạn, tôi có thể giúp gì cho bạn?</string>
+    <string name="support_thank_you">Cảm ơn bạn đã liên hệ. Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</string>
+    <string name="hide_message_hint">Nhập tin nhắn...</string>
+    <string name="action_send">Gửi</string>
+    <string name="hint_current_password">Mật khẩu hiện tại</string>
+    <string name="hint_new_password">Mật khẩu mới</string>
+    <string name="hint_confirm_new_password">Xác nhận mật khẩu mới</string>
+
+    <!-- Notification Actions -->
+    <string name="action_mark_all_read">Đánh dấu đã đọc tất cả</string>
+    <string name="action_mark_read">Đánh dấu đã đọc</string>
+    <string name="action_mark_unread">Đánh dấu chưa đọc</string>
+    <string name="action_delete_notif">Xóa thông báo</string>
+    <string name="msg_mark_all_read">Đã đánh dấu đọc tất cả</string>
+
+    <!-- Notification Content -->
+    <string name="notif_sys_welcome_title">Chào mừng bạn mới!</string>
+    <string name="notif_sys_welcome_msg">Chào mừng bạn đến với Cà phê ngon. Nhập mã HELLO để giảm 10% cho đơn đầu tiên.</string>
+    <string name="notif_promo_title">Giảm 20% Cà phê đen</string>
+    <string name="notif_promo_msg">Duy nhất hôm nay! Giảm giá 20% cho tất cả các món Cà phê đen. Đặt ngay!</string>
+    
+    <string name="notif_title_pending">Đơn hàng đang chờ xử lý</string>
+    <string name="notif_msg_pending">Đơn hàng %1$s (%2$s) đang chờ xác nhận. Nhấn để xem chi tiết.</string>
+    <string name="notif_title_shipping">Đơn hàng đang giao - Vui lòng xác nhận</string>
+    <string name="notif_msg_shipping">Shipper đang giao %1$s. Nhấn vào đây để XÁC NHẬN đã nhận hàng.</string>
+    <string name="notif_title_completed">Đơn hàng hoàn thành</string>
+    <string name="notif_msg_completed">Bạn đã nhận %1$s. Cảm ơn bạn đã ủng hộ!</string>
+    <string name="notif_title_cancelled">Đơn hàng đã hủy</string>
+    <string name="notif_msg_cancelled">Đơn hàng %1$s đã bị hủy.</string>
+    <string name="notif_product_info_multi">%1$s và %2$d sản phẩm khác</string>
+    <string name="notif_order_not_found">Không tìm thấy đơn hàng</string>
+    <string name="notif_promo_detail">Chi tiết khuyến mãi: %1$s</string>
+
+    <!-- Product Options -->
+    <string name="size_m">M (Vừa)</string>
+    <string name="size_l">L (Lớn)</string>
+    <string name="sugar_100">100% Đường</string>
+    <string name="sugar_70">70% Đường</string>
+    <string name="ice_100">100% Đá</string>
+    <string name="ice_50">50% Đá</string>
+
+    <!-- Home Greeting -->
+    <string name="greeting_hello">Xin chào!</string>
+
+    <!-- Categories -->
+    <string name="cat_all">Tất cả</string>
+    <string name="cat_coffee">Cà phê</string>
+    <string name="cat_tea">Trà</string>
+    <string name="cat_smoothie">Sinh tố</string>
+    <string name="cat_pastry">Bánh ngọt</string>
+    
+    <!-- Forgot Password -->
+    <string name="title_forgot_password">Quên mật khẩu</string>
+    <string name="prompt_enter_email">Vui lòng nhập email đã đăng ký để đặt lại mật khẩu.</string>
+    <string name="action_send_code">Gửi yêu cầu</string>
+    <string name="msg_reset_email_sent">Yêu cầu đã được gửi. Vui lòng kiểm tra email của bạn.</string>
+    <string name="err_reset_email_failed_prefix">Gửi yêu cầu thất bại: %s</string>
 </resources>

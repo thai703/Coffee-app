@@ -24,7 +24,9 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
 
     public interface OnProductGridClickListener {
         void onProductClick(ProductGrid product);
+
         void onAddToCartClick(ProductGrid product, View view);
+
         void onFavoriteClick(ProductGrid product, int position);
     }
 
@@ -74,20 +76,43 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
 
         public void bind(final ProductGrid product, final OnProductGridClickListener listener) {
             productName.setText(product.getName());
-            
+
             // Format price to currency
             NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
             productPrice.setText(currencyFormat.format(product.getPrice()));
-            
+
             favoriteButton.setSelected(product.isFavorite());
 
-            // Sử dụng Glide để load ảnh mượt mà hơn và tự động resize
-            Glide.with(itemView.getContext())
-                    .load(product.getImageResId())
-                    .transform(new CenterCrop(), new RoundedCorners(16)) // Bo góc đẹp mắt
-                    .placeholder(R.drawable.ic_image_placeholder) // Ảnh chờ nếu load chậm
-                    .error(R.drawable.product_image_error) // Ảnh lỗi
-                    .into(productImage);
+            // Handle Image Loading (Resource ID vs URL)
+            if (product.getImageResId() != 0) {
+                Glide.with(itemView.getContext())
+                        .load(product.getImageResId())
+                        .transform(new CenterCrop(), new RoundedCorners(16))
+                        .placeholder(R.drawable.product_image_placeholder)
+                        .error(R.drawable.product_image_error)
+                        .into(productImage);
+            } else if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+                String imageUrl = product.getImageUrl();
+                if (imageUrl.startsWith("http")) {
+                    Glide.with(itemView.getContext())
+                            .load(imageUrl)
+                            .transform(new CenterCrop(), new RoundedCorners(16))
+                            .placeholder(R.drawable.product_image_placeholder)
+                            .error(R.drawable.product_image_error)
+                            .into(productImage);
+                } else {
+                    // Handle drawable name string if necessary
+                    int resId = itemView.getContext().getResources().getIdentifier(imageUrl, "drawable",
+                            itemView.getContext().getPackageName());
+                    if (resId != 0) {
+                        productImage.setImageResource(resId);
+                    } else {
+                        productImage.setImageResource(R.drawable.product_image_placeholder);
+                    }
+                }
+            } else {
+                productImage.setImageResource(R.drawable.product_image_placeholder);
+            }
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) {
@@ -111,6 +136,11 @@ public class ProductGridAdapter extends RecyclerView.Adapter<ProductGridAdapter.
                 if (listener != null) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
+                        // Animation
+                        android.view.animation.Animation pop = android.view.animation.AnimationUtils
+                                .loadAnimation(itemView.getContext(), R.anim.heart_pop);
+                        favoriteButton.startAnimation(pop);
+
                         listener.onFavoriteClick(product, position);
                     }
                 }

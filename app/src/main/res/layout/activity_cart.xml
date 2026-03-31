@@ -20,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Giỏ hàng"/>
+            app:title="@string/cart_title"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -42,20 +42,22 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/ic_empty_cart" 
-            android:contentDescription="Giỏ hàng trống"/>
+            android:contentDescription="@string/empty_cart_title"/>
+
+            tools:listitem="@layout/item_cart_product" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Giỏ hàng của bạn đang trống"
+            android:text="@string/empty_cart_title"
             android:textAppearance="?attr/textAppearanceTitleMedium"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Hãy bắt đầu mua sắm để lấp đầy giỏ hàng nhé!"
+            android:text="@string/empty_cart_subtitle"
             android:textAppearance="?attr/textAppearanceBodyMedium"
             android:textColor="?android:attr/textColorSecondary"/>
 
@@ -64,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Tiếp tục mua sắm" 
+            android:text="@string/continue_shopping" 
             android:backgroundTint="@color/premium_accent"/>
 
     </LinearLayout>
@@ -77,7 +79,7 @@
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:visibility="visible" 
+        android:visibility="gone"
         tools:listitem="@layout/item_cart_product"
         app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
         app:layout_constraintBottom_toTopOf="@id/checkout_summary_card"
@@ -100,19 +102,7 @@
             android:orientation="vertical"
             android:padding="16dp">
             
-            <EditText
-                android:id="@+id/et_discount_code"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nhập mã giảm giá" 
-                android:inputType="text"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E0E0E0" 
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -122,7 +112,7 @@
                     android:id="@+id/label_subtotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tạm tính:"
+                    android:text="@string/subtotal_label"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -141,7 +131,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Phí giao hàng:"
+                    android:text="@string/shipping_fee_label"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/label_subtotal" />
@@ -172,7 +162,7 @@
                     android:id="@+id/label_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tổng tiền:"
+                    android:text="@string/total_label"
                     android:textAppearance="?attr/textAppearanceTitleLarge"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -198,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Xác nhận mua hàng"
+                android:text="@string/confirm_purchase"
                 android:enabled="false" 
                 android:backgroundTint="@color/grey_400" 
                 android:textColor="@color/white"/>

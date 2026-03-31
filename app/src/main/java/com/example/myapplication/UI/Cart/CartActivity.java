@@ -15,6 +15,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.UI.checkout.CheckoutActivity;
 import com.example.myapplication.UI.Home.HomeActivity;
 import com.example.myapplication.adapter.CartAdapter;
+import com.example.myapplication.manager.LanguageHelper;
 import com.example.myapplication.manager.CartManager;
 import com.example.myapplication.model.CartItem;
 import com.google.android.material.button.MaterialButton;
@@ -40,6 +41,7 @@ public class CartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LanguageHelper.loadLocale(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
@@ -60,7 +62,12 @@ public class CartActivity extends AppCompatActivity {
             if (loadingView != null) {
                 loadingView.setVisibility(isLoading ? View.VISIBLE : View.GONE);
             }
-            cartRecyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+            if (isLoading) {
+                cartRecyclerView.setVisibility(View.GONE);
+                emptyStateView.setVisibility(View.GONE);
+            } else {
+                updateUiComponents(currentCartItems);
+            }
         });
     }
 
@@ -75,7 +82,7 @@ public class CartActivity extends AppCompatActivity {
 
         setSupportActionBar(findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Giỏ hàng");
+        getSupportActionBar().setTitle(getString(R.string.cart_title));
     }
 
     private void setupRecyclerView() {
@@ -102,19 +109,19 @@ public class CartActivity extends AppCompatActivity {
     private void setupListeners() {
         continueShoppingButton.setOnClickListener(v -> {
             Intent intent = new Intent(CartActivity.this, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            finish();
         });
 
         checkoutButton.setOnClickListener(v -> {
             if (currentCartItems != null && !currentCartItems.isEmpty()) {
                 Intent intent = new Intent(CartActivity.this, CheckoutActivity.class);
-                intent.putParcelableArrayListExtra(CheckoutActivity.EXTRA_CART_ITEMS, (ArrayList<CartItem>) currentCartItems);
+                intent.putParcelableArrayListExtra(CheckoutActivity.EXTRA_CART_ITEMS,
+                        (ArrayList<CartItem>) currentCartItems);
                 intent.putExtra(CheckoutActivity.EXTRA_TOTAL_AMOUNT, currentTotal);
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "Giỏ hàng của bạn đang trống", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.empty_cart_title), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -140,9 +147,10 @@ public class CartActivity extends AppCompatActivity {
         tvTotal.setText(currencyFormat.format(currentTotal));
 
         checkoutButton.setEnabled(!isEmpty);
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-             checkoutButton.setBackgroundColor(getResources().getColor(!isEmpty ? R.color.premium_accent : R.color.grey_400, getTheme()));
-        } 
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            checkoutButton.setBackgroundColor(
+                    getResources().getColor(!isEmpty ? R.color.premium_accent : R.color.grey_400, getTheme()));
+        }
     }
 
     @Override
